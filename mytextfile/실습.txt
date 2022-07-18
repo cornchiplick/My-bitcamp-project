@@ -1,0 +1,87 @@
+구-----------------------------------------------------------------------------------------------------------
+*형상관리시스템
+= configuration management system(cms)
+= versim management system(vms)
+>> 1) 소스코드의 변경을 기록, 보관하는 시스템
+소스코드의 변경 : who, when, where, what
+>> 2) 공유, 접근 권한 제어
+
+1. local 버전관리 시스템 :
+    1) 개인용 버전관리 시스템
+    2) 공유 불가.
+
+2. 중앙 버전관리 시스템 :
+(저장소 = 폴더 = Repository = Repo)
+upload = commit = check in
+download = check out
+    1) 중앙서버에서 관리 (변경사항을)
+    2) 공유 가능.
+
+3. 분산 버전관리 시스템 : ex) git
+복제 업로드 : push
+
+git clone https://github.com/eomcs/eomcs-java
+git add .
+git commit -m "ok"
+------- 까지하면 로컬 저장소에 commit 된것 -----------
+git push
+-------- 까지하면 서버에 push 된것 ------------
+(서버 변경 사항을 가져오기 = pull)
+git pull
+-------- 까지하면 변경사항 적용된 것을 다시 가져옴 -------
+
+
+신-----------------------------------------------------------------------------------------------------------
+
+git pull //최신파일 다운로드
+git clone https://github.com/eomjinyoung/~~~ //repo에서 다운받아옴
+-------------------------------------------------------------------------------------------------------------
+git clone https://github.com/cornchiplick/bitcamp-study // github.com에 있는 repo를 local로 복제해옴.
+git add Hello.java // 백업 명단에 파일을 등록한다. (=staged 상태)
+    파일명 옆에 U : Untracked : 아직 업로드되지 않음
+    파일명 옆에 A : ??? : 인덱스에 추가됨
+    파일명 옆에 M : Modify : 수정되었다는 뜻
+git add . // 현재 폴더부터 하위폴더까지 뒤져서 새로 추가되는걸 전부 git add함
+git commit -m "백업이유" // 백업 명단에 등록된 파일이나 폴더를 로컬저장소에 백업한다. (=snapshot 상태)
+    오류시 :
+    git config --global user.email "ilsunkiss@gmail.com"
+    git config --global user.name "cornchiplick"
+git push // 로컬저장소에 백업한 내용을 git의 repo에 백업한다.
+    username : github 계정명
+    password : personal access token 보안코드 마우스 우클릭으로 입력 (입력해도 투명해서 안보임) // github의 settings-devoper settings-personal access tokens
+최초에 git clone 하고난 이후에는 git pull
+
+-------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------
+
+* <gradle 이용해서 build 하기>
+설치 : Gradle.org - installing manually - binary-only >>>환경변수 편집해서 PATH에 gradle\..\bin까지 경로설정
+
+
+mkdir board-app
+cd board-app
+gradle init
+~~~ JUnit ~~~
+gradle -q run
+
+
+
+gradle build
+
+gradle classes
+
+-------------------------------------------------------------------------------------------------------------
+
+-javac -encoding UTF-8 -d bin/main src/main/java/com/bitcamp/board/App.java
+-javac -encoding UTF-8 -d bin/main -sourcepath src/main/java src/main/java/com/bitcamp/board/App.java  // 여기에 있는 다른 java파일까지 컴파일해줌
+
+-------------------------------------------------------------------------------------------------------
+<Eclipse>
+Eclipse 설정파일 :
+    .project : 프로젝트 정보를 담은 파일
+    .classpath : 소스디렉토리 경로와 의존 라이브러리 정보를 담은 파일
+    .settings/* : Eclipse IDE에서 자바관련 도구의 설정정보를 담은 폴더
+
+$ gradle eclipse : 설정 파일 생성
+$ gradle cleaneclipse : 설정 파일 삭제
