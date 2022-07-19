@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class counting_sort {
-  public static void main(String[] args) {
 
+  public static void main(String[] args) {
     int[] arr = new int[] { 415, 415, 555, 334, 12, 555 };
     int[] counting = new int[1000];
     int[] sorted = new int[6];
@@ -24,5 +24,4 @@ public class counting_sort {
     }
   }
 }
-
-// 먼가 이상하다. 중복 요소가 없으면 정렬이 되는데...?
+// 먼가 이상하다. 중복 요소가 없을때만 정렬이 되는데...?
