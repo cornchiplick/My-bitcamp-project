@@ -21,9 +21,7 @@ public class Test03 {
 
   // 이 메서드를 완성하시오!
   static int swapBits(int value, int i, int j) {
-    if (((value >> i) & 1) == ((value >> j) & 1)) {
-      return value;
-    } else {
+    if (((value >> i) & 1) != ((value >> j) & 1)) {
       value = value ^ (1 << i) ^ (1 << j);
     }
 
