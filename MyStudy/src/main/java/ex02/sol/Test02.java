@@ -1,3 +1,5 @@
+package com.eomcs.quiz.ex02.sol;
+
 // 출처: codefights.com
 //
 // 배열의 전체 길이를 L이라고 하자.
@@ -6,15 +8,15 @@
 // [2, 4, 5, 6, 4, 3, 7, 8] => [4, 3, 7, 8, 2, 4, 5, 6]
 //
 // [시간 복잡도]
-// - ?
+// - O(n) : n은 배열의 개수이다.
 //
-public class Test06 {
+public class Test02 {
 
   public static void main(String[] args) {
-    int[] values = { 2, 4, 5, 6, 4, 3, 7, 8 };
+    int[] values = {2, 4, 5, 6, 4, 3, 7, 8};
     changeValuePosition(values);
 
-    int[] results = { 4, 3, 7, 8, 2, 4, 5, 6 };
+    int[] results = {4, 3, 7, 8, 2, 4, 5, 6};
 
     for (int i = 0; i < results.length; i++) {
       if (values[i] != results[i]) {
@@ -25,18 +27,12 @@ public class Test06 {
     System.out.println(true);
   }
 
-  // 이 메서드를 완성하시오!
   static void changeValuePosition(int[] values) {
+    int tmp;
     for (int i = 0; i < values.length / 2; i++) {
-      if ((values.length & 1) == 0) {
-        int temp = values[i];
-        values[i] = values[i + (values.length / 2)];
-        values[i + (values.length / 2)] = temp;
-      } else {
-        int temp = values[i];
-        values[i] = values[i + 1 + (values.length / 2)];
-        values[i + 1 + (values.length / 2)] = temp;
-      }
+      tmp = values[i + values.length / 2];
+      values[i + values.length / 2] = values[i];
+      values[i] = tmp;
     }
   }
 }

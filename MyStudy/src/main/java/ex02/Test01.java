@@ -5,7 +5,7 @@
 // [2, 4, 1, 0] => 3
 //
 
-public class Test05 {
+public class Test01 {
 
   public static void main(String[] args) {
     System.out.println(maxDiff(new int[] { 2, 4, 1, 0 }) == 3);

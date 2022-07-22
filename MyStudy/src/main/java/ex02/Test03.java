@@ -6,7 +6,7 @@
 // [시간 복잡도]
 // - ?
 //
-public class Test07 {
+public class Test03 {
 
   public static void main(String[] args) {
     int[] values = { 2, 4, 8 };
