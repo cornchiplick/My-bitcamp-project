@@ -1,3 +1,7 @@
+***** java.lang. 패키지는 import없이 사용할 수 있다.
+  가장 기본이다.
+
+
 java.util.Scanner in = new java.util.Scanner(System.in);
   // 키보드 입력값(System.in)을 받는다.
 
@@ -29,5 +33,8 @@ str.trim(); // 결과 ==> "[    공    백    ]"
 in.hasNext();
   // 입력값이 있으면 true를 반환, 없으면 false를 반환 while, if문 등과 같이 쓰임.
 
-java.lang.Math.abs(값)
+java.lang.Math.abs(값);
   // Math 클래스에서 abs 메서드를 가져옴. // 값의 절댓값을 반환한다.
+
+equals("???");
+  // str.equals("aaa"); // 두 인스턴스에 들어있는 문자열이 같은지 비교한다. true/false 반환.

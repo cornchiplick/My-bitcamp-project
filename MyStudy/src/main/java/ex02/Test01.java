@@ -17,14 +17,8 @@ public class Test01 {
     int answer = 1;
 
     for (int i = 0; i < values.length - 1; i++) {
-      if (values[i] - values[i + 1] < 0) {
-        if (values[i + 1] - values[i] >= answer) {
-          answer = values[i + 1] - values[i];
-        }
-      } else {
-        if (values[i] - values[i + 1] >= answer) {
-          answer = values[i] - values[i + 1];
-        }
+      if (java.lang.Math.abs(values[i + 1] - values[i]) >= answer) {
+        answer = java.lang.Math.abs(values[i + 1] - values[i]);
       }
     }
 
