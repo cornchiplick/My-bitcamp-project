@@ -39,6 +39,7 @@ public class Test07 {
 
     // 더 정확한 테스트를 위해 본인(김민구)가 추가함
     System.out.println(factorialTrailingZeros(50) == 12);
+    System.out.println(factorialTrailingZeros(126) == 31);
   }
 
   // 이 메서드를 완성하시오!
