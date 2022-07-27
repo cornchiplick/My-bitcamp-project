@@ -1,10 +1,13 @@
+package com.eomcs.quiz.ex01;
+
 // 출처: codefights.com
 //
 // 주어진 숫자에 짝수가 몇 개인지 세어라.
-// 예)
+// 예) 
 // 1010 => 2
 // 123 => 1
-//
+// [시간 복잡도]
+// - ?
 public class Test04 {
 
   public static void main(String[] args) {
@@ -12,17 +15,9 @@ public class Test04 {
     System.out.println(countEvenNumber(2567884) == 5);
   }
 
-  // 이 메서드를 완성하시오!
   static int countEvenNumber(int value) {
     int result = 0;
-
-    while (value != 0) {
-      if ((value & 1) == 0) {
-        result++;
-      }
-      value /= 10;
-    }
-
+    // 이 메서드를 완성하시오!
     return result;
   }
 }
