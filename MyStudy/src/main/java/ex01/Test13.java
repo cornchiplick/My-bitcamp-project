@@ -36,6 +36,13 @@ public class Test13 {
   // 이 메서드를 완성하시오!
   static int sumOfMultiples(int n, int k) {
     int result = 0;
+    for (int i = 0;; i++) {
+      if (i * k > n) {
+        break;
+      }
+
+      result += i * k;
+    }
 
     return result;
   }
