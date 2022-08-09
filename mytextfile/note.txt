@@ -1392,3 +1392,6 @@ lsb = least significant bit = 최하위비트
     - read(byte[]) : byte 배열 읽기
 
 FileNotFoundException = checkedexception
+
+8/9---------------------------------------------------------------------------------------
+- data파일은 eclipse에서는 프로젝트 폴더아래에 생성되고, cmd에서는 명령을 실행한 폴더에 생성된다.
