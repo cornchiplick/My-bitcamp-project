@@ -44,6 +44,14 @@ public class Test24 {
   static int equationSolutions(int L, int R) {
     int result = 0;
 
+    for (int i = L; i <= R; i++) {
+      for (int j = L; j <= R; j++) {
+        if (i * i * i == j * j) {
+          result++;
+        }
+      }
+    }
+
     return result;
   }
 }

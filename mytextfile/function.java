@@ -38,3 +38,6 @@ java.lang.Math.abs(값);
 
 equals("???");
   // str.equals("aaa"); // 두 인스턴스에 들어있는 문자열이 같은지 비교한다. true/false 반환.
+
+FileInputStream / FileOutputStream
+
