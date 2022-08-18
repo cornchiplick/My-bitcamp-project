@@ -1556,7 +1556,7 @@ FileNotFoundException = checkedexception
     다중 사용자에게 동시에 서비스 제공
 
 ---------------------------------
-* Single project와 Multi0sub project
+* Single project와 Multisub project
 
 1) Single Project 디렉토리 구조
     gradle-project/     // 메인 프로젝트 폴더
