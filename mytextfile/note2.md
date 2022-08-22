@@ -100,15 +100,67 @@
     > **BoardHandler** << call, return >> **BoardDaoProxy** << 통신 >> **BoardServlet**
 
 ---
+
 ##### stateful => stateless (= Connection-Oriented = 연결지향 = **TCP**)
 - stateful 방식
-    > 연결을 끊을 때까지 나머지가 대기해야 하는 줄서기 방식
+    > - 연결을 끊을 때까지 나머지가 대기해야 하는 줄서기 방식
     > : 은행 업무
-    > FTP, POP3, 채팅, 게임
+    > - FTP, POP3, 채팅, 게임
 - stateless 방식
-    > [연결>>요청>>응답>>연결끊기]를 반복하는 방식
+    > - [연결>>요청>>응답>>연결끊기]를 반복하는 방식
     > : 114, ARS 인증
-    > HTTP
+    > - HTTP
 ##### TCP 방식이 아닌 Connectionless 방식(= **UDP**)
     > : 편지, 방송
     > ping
+
+## 8/22
+- **"Remote Object"** : 실제 Data를 저장하고 꺼내는 일을 하는 객체 `BoardDao`
+    - **"Skeleton"** : Remote Object의 서버측 대행자 `BoardServlet`
+        > Server 측 ORB (Object Request Broker)
+    - **"Stub"** : Remote Object의 클라이언트 쪽 대행자 `BoardHandler`
+        > Client 측 ORB (Object Request Broker)
+
+---
+
+- 분산시스템 아키텍처
+    > server를 회계전담서버, 인사전담서버, ... 등으로 나누다보니 시스템 간 기능호출이 필요하다
+    > 이 때문에 **원격메서드호출**이 필요하다.
+
+- 원격메서드 호출기술과 진화과정
+    1. RPC (Remote Procedure Call)
+        > - 원격 메서드를 만드는 개발자에게 부담이 가중되어서
+        > 호출 대행자 생성을 자동화 했다.
+        > - '메서드 생성기'를 통해 코드를 자동생성
+    2. RMI (Remote Method Invocation)
+        > - 객체 생성기가 코드를 자동 생성한다.
+        > `skeleton`과 `stub`의 코드를.
+    3. 
+    - EJB(Enterprise Java Beans) `Beans (=Object)`
+        > only java만 가능
+    -  CORBA (Common Object Request Broker Architecture)
+        > 언어중첩 : 언어에 구애받지 않고 호출할 수 있게 해준다.
+    4. Web Service Architecture : `EJB+CORBA (+웹통신+XML)`
+        > - WSDL : Web Service Description Language : 호출함수 원격 객체의 메서드 정보
+        > - WSDL을 클라에게 응답/ 사용할 stub을 서버에게 요청/ stub을 다운로드/
+        > - 이후 stub과 skeleton은 HTTP에 따라 통신
+        > - **Eclipse IDE 등은 개발도구에서 stub 객체를 자동으로 다운로드 한다.**
+        > **개발자가 직접 다운로드 하지 않는다.**
+    5. RESTful API : `4.에서 추가로 순수 HTTP 기술 사용`
+        > - 개발도구를 사용하여 sub을 자동 다운로드 하더라도 결국 client측에서는 stub객체를 사용해야 한다.
+        > - 또한 프로그래밍 언어에 맞춰 stub을 다운로드 해야한다.
+        > - 이를 해결하려고 순수 HTTP 기술 사용 `프로그래밍 언어별로 stub이 필요없다.`
+
+    - Thread를 이용한 멀티태스킹 구현 : 동시 요청 처리하기
+        > ServerApp : 프로세스
+        > RequestThread : 실행흐름을 분리
+    
+    ---
+
+    - IP주소 `v4의 경우 : 32bit 양의 정수 값`
+        > 1. `C0A8004A` (16진수)
+        > 2. `3,232,235,594` (10진수)
+        > 3. `192.168.0.74` (표현하기 쉽게 1byte씩 잘라서 10진수로 표기)
+        > 4. `localhost` (기억하기 쉽게 이름을 부여)
+        > IP주소를 직접 사용하는 대신에 IP주소에 부여된 알파벳과 숫자로 된 텍스트 이름을 사용하는 것이 편하다.
+        > IP주소에 대한 텍스트 이름을 알려주는 서버가 "**DNS**"
