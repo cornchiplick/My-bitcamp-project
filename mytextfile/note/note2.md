@@ -164,3 +164,46 @@
         > 4. `localhost` (기억하기 쉽게 이름을 부여)
         > IP주소를 직접 사용하는 대신에 IP주소에 부여된 알파벳과 숫자로 된 텍스트 이름을 사용하는 것이 편하다.
         > IP주소에 대한 텍스트 이름을 알려주는 서버가 "**DNS**"
+
+## 8/23
+- proxy 서버 역할
+    > 1. 필터링 >> 접근제어
+    > 2. 로깅(logging) >> 사용기록
+    > 3. 캐싱(caching) >> 임시 보관
+
+- 통신을 하는 모든 프로그램은 port번호를 가져야 한다.
+- client 의 port번호는 OS로부터 자동 발급 받는다. `49152 ~ 65535`
+
+---
+
+- Application은 결국 OS의 메서드 호출 >> 실행 시 OS의 영향을 받는다.
+
+---
+
+- LAN Card = NIC (Network Interface Card)
+
+---
+
+- 버퍼 사용시 입출력
+    > 버퍼가 꽉 찼을 때 입출력하기 때문에 server-client 간 데이터전송이 원활하게 이루어지지 않는다.
+- 해결법
+    > `flush()`를 실행하여 출력을 명령한다.
+
+---
+
+- byte Stream : inputStream, ...
+- character Stream : Reader, Writer, ...
+
+---
+
+##### TCP/IP
+- packet에 관하여~
+![](./img/fig1.png)
+`<fig1>`
+
+---
+
+- Collaboration Diagram
+    > Sequence Diag.
+    > 시간 흐름에 따라 실행과정을 표현하기에 적합
+
