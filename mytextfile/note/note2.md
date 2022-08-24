@@ -207,3 +207,78 @@
     > Sequence Diag.
     > 시간 흐름에 따라 실행과정을 표현하기에 적합
 
+## 8/24
+- Node.js 는 싱글스레드로 되어 있다.
+- 자바스크립트를 실행하는 스레드는 하나뿐이므로 Node를 싱글스레드라고 한다.
+- 그 싱글스레드는 이벤트 루프이다.
+
+---
+
+- Connection-Oriented vs Connectionless
+    > Connection-Oriented : TCP (연결지향)
+    > - stateful
+    > - stateless
+    > ServerSocket, Socket
+
+    > Connectionless : UDP (비연결)
+    > DatagramSocket, DatagramPacket
+    > 편지, ping
+
+- URI (Uniform Resource Identifier) :: URL, URN
+    - URL : Uniform Resource Locator
+        > `scheme(프로토콜)://<user(사용자id)>:<password(암호)>@<host(서버주소)>:<port(포트번호)>/(path)(자원의경로)<url-path(query string)>`
+        > - id와 암호는 생략가능
+    - URN : Uniform Resource Name
+        > `example:animal:ferret:nose`
+
+- 정적자원(Static Resources)과 동적자원(Dynamic Resources)
+![](./img/fig2.png)
+`<fig2>`
+
+---
+
+- VM (Virtual Machine)
+    > Host OS 위에 Guest OS를 설치하는 모양새.
+    > 가상머신은 실제컴퓨터처럼 H/W 자원을 사용 :: 자원낭비가 심하다.
+    > 그래서...(아래)
+- Docker
+    > App을 실행하는데 필요한 H/W 자원만 사용
+    > 물론 VM처럼 별도의 컴퓨터에서 실행하는 것처럼 동작
+
+---
+
+- 멀티 태스킹
+> 여러 작업을 순차적으로가 아니라 동시에 수행
+
+- concurrent
+> 마치 동시에 실행하는것처럼 빠르게 왔다갔다 하는것. (!= parallel)
+
+1. 멀티 프로세싱
+    > 프로세스(process) : 실행중인 프로그램
+    > 프로세스를 복제(fork)해서 멀티태스킹 수행
+    > code가 중복로딩, heap 중복생성 :: 메모리 많이 사용
+2. 멀티 스레딩
+![](./img/fig3.png)
+`<fig3>`
+
+    > code와 heap 메모리를 여러 스레드가 공유
+    > :: 멀티 프로세싱 방식에 비해 메모리 낭비가 적다.
+    > 프로세스 종료 시 :: 종속된 스레드도 모두 자동 종료
+    > 프로세스와 스레드를 동일하게 간주하여 동시 실행한다.
+    
+- cpu가 프로세스나 스레드의 명령을 실행할 떄, cpu실행을 분배하는 전략?
+`cpu를 어떤식으로 분배해서 명령을 처리할 것인가?`
+`"cpu scheduling"`
+    > 1. windows :: Round Robin :: 프로세스와 스레드에 동일 시간 분배
+    > 2. unix :: Priority + Aging :: (우선순위가 높은 프로세스나 스레드를 더 많이 실행) + (우선순위가 낮아 실행이 밀릴 때마다 우선순위를 높여서 다음 번엔 실행될 수 있게 하는 것)
+
+- Context Switching
+`cpu가 다른 프로세스나 스레드를 실행하기 위해 현재 프,스의 실행상태(여기까지 실행했다)를 저장하고  실행할 프,스의 실행상태(어디서부터 실행하나?)를 로딩하는것`
+`cpu스케쥴링 시간을 너무 짧게 잡으면 명령을 실행하는 시간보다 context switching에 더 많은 시간을 소비하는 문제가 발생한다 :: 너무 간극을 크게 잡으면 동시실행 효과가 떨어진다.`
+
+---
+
+`cpu : L1(명령어 저장소) + L2(data 저장소)`
+
+---
+
