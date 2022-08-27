@@ -294,3 +294,80 @@
 2. Runnable 인터페이스 구현하기
     > 많이 사용되는 방법
     > 위와 사용법은 같다.
+
+## 8/26
+- main 스레드가 먼저 종료되어도 다른 스레드가 종료될 때까지 JVM은 종료되지 않는다.
+- Thread의 생명주기(lifecycle)
+    > 1. 준비 : start()를 통해 Running상태로 돌입
+    > 2. Running : cpu스케쥴링 대상 = cpu를 받을 수 있는 상태
+    > 3. Not Runnable : cpu를 안 받는 상태 = cpu스케쥴링 대상에서 제외
+    > 4. Dead : run()메서드 실행 완료, 다시 Running상태로 갈 수 없다.
+
+---
+
+- cpu racing (cpu 쟁탈전)
+    > 여러 프로세스나 스레드들이 cpu 사용권을 놓고 경쟁하는 것.
+    > 그러나 사실은 OS가 cpu 스케쥴링 정책에 따라 결정하고 표현만 이렇게 한다.
+
+---
+
+#### Critical Region(Critical Section)
+
+- 여러 스레드가 동시에 코드를 실행할 떄 문제가 발생하는 코드 블록을 "**Critical Region**" 또는 "**Critical Section**"이라 부른다.
+> 왜 이런 문제가 발생하는가?
+
+- 같은 메모리(변수)에 동시에 접근하여 값을 변경할 때, 다른 스레드가 쓴 값을 덮어 쓸 수 있기 때문이다.
+> 어떻게 해결할 수 있는가?
+
+- <u>한 번에 한 스레드 만</u>이 접근하도록 제한하면 된다
+ `Mutual Exclusion (상호배타)` = `Mutex`
+ 자바에서는 Mutex를 문법으로 지원!
+- 상호 배제 기법
+`Semaphore(n)` : <u>n개 까지만 허용, 나머지는 배제</u>
+    `semaphore(1) = Mutex`
+
+---
+
+- `thread safe` : 여러 스레드가 동시에 실행해도 문제가 없는 코드 블록
+
+---
+
+- **`synchronized` 문법**
+`synchronized (객체명) {}` : {}안에서 동시에 접근할 수 없는 객체를 ()에 선언해준다.
+
+---
+
+#### Database
+- 데이터 공유
+- 일관성, 무결성, 보안성
+- 데이터 중복 최소화
+- 실시간 접근 가능
+- etc
+
+---
+
+#### DBMS :: Database를 관리
+- Database 관리
+- 다중 client 요청 처리
+- 접속자 인증/권한검사
+- etc
+
+> Oracle - Oracle DBMS
+> MS - MS-SQL
+> IBM - DB2
+> Oracle - MySQL >>오픈소스>> **MariaDB**
+> 개발커뮤니티 - MariaDB
+> 한국 - Cubrid, Altibase, Tibero, ...
+
+---
+
+#### SQL (Structured Query Language)
+- 구조를 갖춘, DBMS에 명령을 내릴 때 사용하는 문법
+- 각 DBMS의 명령문법을 표준화한것(?)
+- SQL표준문법 외에도 DBMS마다 전용 문법이 있다.
+    > 왜?
+    > :: 각자 장단점이 있다.
+    > :: DBMS만의 특별기능을 사용할 문법이 필요.
+
+---
+
