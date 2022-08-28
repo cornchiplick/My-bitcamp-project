@@ -6,7 +6,7 @@
     > repository의 settings - Collaborators - Add People
 ---
 
-#### Commands
+### Commands
 ##### Base
 - `git status` : git의 상태 볼 수 있다.
 - `git log` : 지난 commit 기록들을 볼 수 있고, j와 k로 스크롤 가능.
@@ -38,17 +38,26 @@
 - `git rebase --abort` : 위와동
 - `git rebase --continue` : 충돌내용을 수정한 후 `git add .`으로 변경사항을 추가하고 나머지 `rebase`과정을 계속 진행시킨다.
 
+---
+##### Github
+- `git push -u (branch name)` : `-u` :: 현재 branch와 명시된 branch 기본연결, 그리고 `push`
+- `git push --force` : **협업도중이 아닌 혼자 작업할 때만 사용할 것** 로컬의 작업 내용을 원격에 강제로 적용한다.
+- `git push -u origin (new branch)` : 원격에 새 branch를 생성하고 거기에 현재 branch의 내역을 `push`까지 하겠다.
+- `git branch -a` : 로컬뿐만 아니라 원격의 branch까지 볼 수 있다. (remote에만 있는 branch는 볼 수 없다.)
+- `git fetch` : 원격의 변경사항을 확인 할 수 있다. 이 명령 이후라면 로컬에서 원격에만 있는 branch도 확인할 수 있다.
+- `git switch -t origin/(from remote)` : 로컬의 현재 branch를 원격의 branch와 동일시 하겠다? (**부정확 정보!!**)
+- `git push (origin) --delete (remote branch name)` : remote의 branch를 삭제하는 명령어.
 
 ---
 
-#### Reset vs Revert
+### Reset vs Revert
 - `Reset` : 특정 과거 시점으로 돌아간 후 그 이후의 기록들을 모두 날려버리는 것.
 - `Revert` : 특정 과거 시점(A)에 대한 역실행 commit 내역(-A)을 추가한 다음, 결과적으로 그 특정 시점(A)으로 돌아가는 것.
     > 이 경우, 그 시점(A) 이후(B, C, ...)의 다른 내역들은 유지된다.
 
 ---
 
-#### Merge vs Rebase
+### Merge vs Rebase
 - `Merge` : 두 가지를 이어붙이고 그 과정에서 `commit`하나가 더 생겨난다.
     - history에 branch의 흔적을 남긴다.
     - branch의 사용내역들을 남겨둘 필요가 있으면 `Merge`를 사용하라.
@@ -67,4 +76,8 @@
 
 ---
 
-
+### 협업 발생 시 충돌 상황 해결하기
+- `git pull --no-rebase` : 팀원과 `push`과정에서 충돌이 났을 때 먼저 `pull`을 하는 과정에서 `merge`방식으로 충돌을 해결하고자 하는 것.
+- `git pull --rebase` : 팀원과 `push`과정에서 충돌이 났을 때 먼저 `pull`을 하는 과정에서 `rebase`방식으로 충돌을 해결하고자 하는 것. **(협업시 사용 OK)** 
+    > 로컬에서 작업할 때 이미 공유된 것들을 `rebase`를 사용하여 올리지 말라는 것
+    > 뭔가 `pull`받는 상황에서 `rebase`는 괜찮다! 는 뜻
