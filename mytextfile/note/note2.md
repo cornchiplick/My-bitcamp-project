@@ -371,3 +371,65 @@
 
 ---
 
+## 8/29
+![](./img/fig4.PNG)
+`<fig4>`
+
+- SQL 명령 전달?
+    > 서버에는 SQL 명령을 입력받는 UI가 없다.
+    > 사용자가 입력한 SQL을 서버에게 전달해줄 App을 사용(Client)
+
+1. 사용자 등록
+    `create user '(name)'@'(localhost)' identified by '(password)';`
+2. 데이터베이스 생성
+    `create database (database name) character set (utf8) collate (utf8_general_ci);`
+3. 사용자가 접근할 수 있는 데이터베이스 권한 부여
+    `grant all on (studydb.*) to '(name)'@'(localhost)';`
+
+- `desc studydb.test01;` : table정보 확인
+- `use studydb;` : 사용할 database명(import와 동일기능)
+- `show tables;` : table들 보여줌.(MariaDB용)
+- `insert into test1(no, name) values (1, 'aaa');` : 데이터를 입력한다. 문자를 입력할 때 single quotation을 권고한다.
+
+---
+
+##### SQL
+- DDL (Data aDefinition Language)
+    > 테이블, 뷰, 함수, 트리거 등을 생성, 변경, 삭제하는 SQL 명령
+    1. 테이블 정의
+        > create table studydb.test01 (
+            name varchar(50) not null,
+            kor int not null,
+            eng int not null,
+            math int not null,
+            sum int not null,
+            aver float not null);
+
+    2. 테이블에 데이터 입력
+        > insert into test1(no, name) values(1, 'aaa');
+
+    3. 테이블에 들어있는 데이터 조회
+        > select no, name from test1;
+
+- table, row, column
+    > row : 행, `record`, `tuple`
+    > column : 열, `attribute`
+    > table : `entity`
+
+- numeric
+    > 전체 자릿수와 소수점 이하의 자릿수를 정밀하게 지정할 수 있다.
+    > numeric(n,e) : 전체 n 자릿수 중에서 소수점은 e 자릿수다.
+        > 예) numeric(10,2) : 12345.1211 => 12345.12
+    > numeric : numeric(10, 0) 과 같다.
+
+- PK (primary key)
+    - 테이블의 데이터를 구분할 때 사용하는 컬럼들이다.
+    - 줄여서 PK라고 표시한다.
+    - PK 컬럼을 지정하지 않으면 데이터가 중복될 수 있다.
+
+- 인공키 (Artificial key)
+    - 오로지 key로만 사용할 목적으로 만들어진 column
+
+- 대안키 (Alternate key)
+    - PK는 아니지만 PK처럼 중복되어서는 안되는 컬럼을 지정할 때 사용한다.
+    - 대안키는 DBMS에서 unique 컬럼으로 지정한다.
