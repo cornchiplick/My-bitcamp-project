@@ -394,7 +394,7 @@
 ---
 
 ##### SQL
-- DDL (Data aDefinition Language)
+##### DDL (Data Definition Language)
     > 테이블, 뷰, 함수, 트리거 등을 생성, 변경, 삭제하는 SQL 명령
     1. 테이블 정의
         > create table studydb.test01 (
@@ -433,3 +433,44 @@
 - 대안키 (Alternate key)
     - PK는 아니지만 PK처럼 중복되어서는 안되는 컬럼을 지정할 때 사용한다.
     - 대안키는 DBMS에서 unique 컬럼으로 지정한다.
+
+## 8/30
+- create view
+    > 따로 table을 만드는 것이 아니다.
+    > 단축키를 만드는 것이다.
+    > 가상의 table처럼 작동해서 sql문을 줄일 수 있다.
+
+---
+- commit / rollback :: 트랜잭션을 다룬다.
+    - insert, update, delete, ...
+    - 이들을 한 단위로 묶어서 처리해야 하는 경우가 있다.
+        > ex) 구매할 제품 inesert + 결제정보를 insert
+    - 여러 개의 DML 작업을 한 단위로 묶는다.
+    **"Transaction"이라 부른다.**
+    - 그 단위에 묶인 작업이 모두 성공할 때만 업무가 완성된다.
+
+---
+- key - 데이터를 구분하는 식별자
+![](./img/fig5.png)
+`<fig5>`
+
+---
+##### DQL (Data Query Language)
+>데이터 조회 언어 :: Query : 조회
+
+---
+- "Projection" : 결과로 추출할 컬럼을 지정
+- "Selection" : 특정 조건의 데이터를 선택
+    > ex) select no, name from teset1 where no > 10;
+    - no, name :: projection 대상
+    - where no > 10 :: selection 조건
+
+
+
+
+
+
+
+---
+##### DML (Data Manipulation Language)
+> 데이터 조작 언어 :: DQL+DML 묶어서 DML이라고도 한다.
