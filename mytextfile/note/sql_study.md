@@ -36,6 +36,19 @@
 - `describe 테이블명;` = `desc 테이블명;` : 테이블 정보 보기
 - `drop table 테이블명;` : 테이블 삭제하기
 - `insert into 테이블명(컬럼명, 컬럼명, ...) values(값, 값, ...);` : 테이블의 각 컬럼에 대응하는 값 삽입하기
+- <옵션> `default 값` : `insert`시 값 입력을 생략하면 지정된 기본값이 대신 입력된다.
+    > 값 입력시 'NULL'을 넣으면 기본값이 입력되지 않고 'NULL'이 들어간다.
+- 주석달기 : `comment` 명령어로 입력한 주석은 DBMS에 저장된다.
+```sql
+CREATE TABLE stnt (
+    mno    INTEGER     NOT NULL COMMENT '수강생번호', -- 수강생번호
+    work   CHAR(1)     NOT NULL COMMENT '재직여부', -- 재직여부
+    acc_no VARCHAR(20) NULL     COMMENT '통장번호', -- 통장번호
+    bank   VARCHAR(50) NULL     COMMENT '은행명' -- 은행명
+)
+COMMENT '수강생';
+```
+
 
 ---
 ###### table 정보 수정
@@ -72,6 +85,7 @@ alter table test1
 ```
 
 - 특정 컬럼의 값을 자동으로 증가하게 설정한다.
+    - <옵션> `auto_increment`
     - 단 반드시 key(primary key 나 unique)여야 한다.
     - 마지막으로 입력된 값을 기준으로 증가한다. (1, 2, 100 순서라면 101)
 ```
@@ -79,15 +93,17 @@ alter table test1
   modify column no int not null auto_increment;
 ```
 
-
----
-###### 옵션
-- `default 값` : `insert`시 값 입력을 생략하면 지정된 기본값이 대신 입력된다.
-    > 값 입력시 'NULL'을 넣으면 기본값이 입력되지 않고 'NULL'이 들어간다.
+- **컬럼에 FK 추가하기**
+```
+alter table 테이블명
+    add constraint 제약조건이름 foreign key (컬럼명) references 테이블명(컬럼명);
+```
 
 ---
 ###### key
 - `primary key 지정`
+    - <옵션> `primary key`
+    - <선언> `constraint 키명 primary key(컬럼명)`
 ```
 create table test1(
     name varchar(20) primary key,
@@ -106,6 +122,7 @@ create table test1(
   );
 ```
 - `alternate key 지정 (대안키)`
+    - <선언> `constraint 키명 unique(컬럼명)`
 ```
 create table test1(
     no int primary key,
@@ -121,6 +138,7 @@ create table test1(
 ---
 ###### index
 - name 컬럼을 기준으로 오름차순 정렬
+    - <선언> `fulltext index 인덱스명 (컬럼명)`
 ```
 create table test1(
     no int primary key,
@@ -134,6 +152,77 @@ create table test1(
   );
 // fulltext 옵션은 text계열의 타입만 정렬한다.
 ```
+
+---
+##### DML(Data Manipulation Language)
+- `insert into 테이블명(컬럼명, 컬럼명, ...) select절;` : select절의 결과를 insert한다.
+- `update 테이블명 set 컬럼명=값, 컬럼명=값, ... where 조건...;` : 등록된 데이터를 변경한다.
+조건을 지정하지 않으면 모든 데이터를 변경한다.
+- `delete from 테이블명 where 조건;` : 데이터를 삭제한다.
+조건을 지정하지 않으면 모든 데이터를 삭제한다.
+- `set autocommit=false;` & `set autocommit=true;` : 명령창의 내용이 즉시 table에 commit되는 기능을 끄거나 켠다.
+- `commit;` & `rollback` : commit=false 상태에서 작업내용을 적용하거나 마지막 commit 시점으로 되돌린다.
+
+---
+##### DQL(Data Query Language)
+- `select * from 테이블;` : **테이블의 데이터 조회 기본형**
+- `select no, concat(name,'(',class,')') from test1;` : 가상의 컬럼 값을 조회하기
+출력 데이터형식 : no, name(class) 
+- `select 컬럼명 [as] 별명 ...` : 컬럼에 별명 붙히기
+as를 생략할 수 있다.
+
+---
+##### 함수
+- `now()` : 현재 날짜 및 시간
+- `curdate()` : 현재 날짜
+- `curtime()` : 현재 시간
+- `date(컬럼명)` `time(컬럼명)` : 날짜데이터나 시간데이터만 뽑기
+- `date_add(날짜데이터, interval 값 단위);` : 날짜데이터에 년월일시분초 등을 추가하거나 빼기
+ex) `select date_add(now(), interval 11 day);`
+- `datediff(날짜1, 날짜2);` : 두 날짜 사이의 간격 알아내기
+ex) `select datediff(curdate(), '2022-5-2');`
+- `date_format(날짜, 형식)` : 날짜에서 특정 형식으로 값을 추출하기
+ex) `select regdt, date_format(regdt, '%m/%e/%Y') from test1;`
+```
+- 년
+    %Y : 2022
+    %y : 22
+- 월
+    %M : August
+    %m : 08
+    %b : Aug
+- 일
+    %e : 7
+    %d : 07
+- 주
+    %W : Wednesday
+    %w : 3 :: 일~토 > 0~6
+    %a : Wed
+- 시
+    %p : PM
+    %h : 1
+    %H : 13
+    %l : 1
+- 분
+    %i : 33(분)
+- 초
+    %s : 45(초)
+```
+- 문자열을 날짜 값으로 바꾸기
+    - 날짜 값을 저장할 때 기본 형식은 yyyy-MM-dd이다.
+```
+select str_to_date('11/22/2022', '%m/%d/%Y');
+select str_to_date('2022.2.12', '%Y.%m.%d');
+-----------------------------------------------
+/* 다음 형식의 문자열을 날짜 값으로 지정할 수 없다.*/
+insert into test1 (title, regdt) values('bbbb', '11/22/2022');
+-----------------------------------------------
+/* 특정 형식으로 입력된 날짜를 date 타입의 컬럼 값으로 변환하면 입력할 수 있다.*/
+insert into test1 (title, regdt) values('bbbb', str_to_date('11/22/2022', '%m/%d/%Y'));
+```
+
+
+
 
 
 ---
@@ -195,7 +284,57 @@ create table test1(
     - 실제 컬럼을 생성할 때 tinyint(1) 로 설정한다.
 
 ---
-##### key
+##### index
+- 검색 조건으로 사용되는 컬럼인 경우 따로 정렬해 두면 데이터를 찾을 때 빨리 찾을 수 있다.
+- 특정 컬럼의 값을 A-Z 또는 Z-A로 정렬시키는 문법이 인덱스이다.
+- DBMS는 해당 컬럼의 값으로 정렬한 데이터 정보를 별도의 파일로 생성한다.
+- 보통 책 맨 뒤에 붙어있는 색인표와 같다.
+- 인덱스로 지정된 컬럼의 값이 추가/변경/삭제 될 때 인덱스 정보도 갱신한다.
+- 따라서 입력/변경/삭제가 자주 발생하는 테이블에 대해 인덱스 컬럼을 지정하면,
+  입력/변경/삭제 시 인덱스 정보를 갱신해야 하기 때문에
+  입력/변경/삭제 속도가 느려지는 문제가 있다.
+- 대신 조회 속도는 빠르다.
+
+---
+##### view
+- view가 참조하는 테이블에 데이터를 입력한 후 view를 조회하면?
+  => 새로 추가된 컬럼이 함께 조회된다.
+- 뷰를 조회할 때 마다 매번 select 문장을 실행한다.
+  => 미리 결과를 만들어 놓는 것이 아니다.
+- 일종의 조회 함수 역할을 한다.
+- 목적은 복잡한 조회를 가상의 테이블로 표현할 수 있어 SQL문이 간결해진다.
+
+---
+### 2. DQL(Data Query Language)
+-  조회할 때 조건 지정하기
+    - where 절과 연산자를 이용하여 조회 조건을 지정할 수 있다.
+    - 이렇게 조건을 지정하여 결과를 선택하는 것을 "**셀렉션(selection)**" 이라 한다.
+
+---
+##### 연산자
+- OR, AND, NOT
+    - OR : 두 조건 중에 참인 것이 있으면 조회 결과에 포함시킨다.
+    - AND : 두 조건 모두 참일 때만 조회 결과에 포함시킨다.
+    - NOT : 조건에 일치하지 않을 때만 결과에 포함시킨다.
+
+- 사칙연산
+    - +, -, *, /, % 연산자를 사용할 수 있다.
+
+- 비교연산
+    - =, !=, >, >=, <, <=, <>
+
+- between 값1 and 값2
+    - 두 값 사이(두 값도 포함)에 있는지 검사한다.
+    - ex) `select 5 between 3 and 5;`
+
+- like
+    - 문자열을 비교할 때 사용한다.
+    - ex) `select * from test1 where class like 'java%';`
+    - `%` : 문자가 0개 이상 있다.
+    - `_` : 이 자리에 문자가 1개 있다.
+
+---
+### 3. key
 ![](./img/fig5.png)
 
 - key
@@ -231,32 +370,28 @@ create table test1(
     - 대신 회원 번호와 같은 임의의 키(인공 키)를 만들어 사용하는 것이 좋다.
 ```
 
----
-##### index
-- 검색 조건으로 사용되는 컬럼인 경우 따로 정렬해 두면 데이터를 찾을 때 빨리 찾을 수 있다.
-- 특정 컬럼의 값을 A-Z 또는 Z-A로 정렬시키는 문법이 인덱스이다.
-- DBMS는 해당 컬럼의 값으로 정렬한 데이터 정보를 별도의 파일로 생성한다.
-- 보통 책 맨 뒤에 붙어있는 색인표와 같다.
-- 인덱스로 지정된 컬럼의 값이 추가/변경/삭제 될 때 인덱스 정보도 갱신한다.
-- 따라서 입력/변경/삭제가 자주 발생하는 테이블에 대해 인덱스 컬럼을 지정하면,
-  입력/변경/삭제 시 인덱스 정보를 갱신해야 하기 때문에
-  입력/변경/삭제 속도가 느려지는 문제가 있다.
-- 대신 조회 속도는 빠르다.
+- FK(Foreign Key)
+    - 다른 테이블의 PK를 참조하는 컬럼이다.
+    - 다른 데이터를 참조하는 경우 해당 데이터의 존재 유무를 검사하도록 강제한다.
+    - 다른 테이터에 의해 참조되는지 여부를 검사하도록 강제한다.
+    - 다른 테이블의 데이터와 연관된 데이터를 저장할 때 무효한 데이터가 입력되지 않도록 제어하는 문법이다.
+    - 다른 테이블의 데이터가 참조하는 데이터를 임의의 지우지 못하도록 제어하는 문법이다.
+    - 그래서 데이터의 무결성(data integrity; 결함이 없는 상태)을 유지하게 도와주는 문법이다.
 
----
-##### view
-- view가 참조하는 테이블에 데이터를 입력한 후 view를 조회하면?
-  => 새로 추가된 컬럼이 함께 조회된다.
-- 뷰를 조회할 때 마다 매번 select 문장을 실행한다.
-  => 미리 결과를 만들어 놓는 것이 아니다.
-- 일종의 조회 함수 역할을 한다.
-- 목적은 복잡한 조회를 가상의 테이블로 표현할 수 있어 SQL문이 간결해진다.
-
-
+- 다른 테이블에 의해 참조되는 테이블을 '**부모 테이블**'이라 부른다.
+- 다른 테이블의 데이터를 참조하는 테이블을 '**자식 테이블**'이라 부른다.
 
 ---
 
 
+
+
+
+
+
+
+
+---
 ```
 sql의 convention :
 ex) where name='a'
@@ -271,5 +406,4 @@ OracleDB는 from절 필수지만 MariaDB는 질의가능
 like %aaa% : 중간의 문자를 찾는 것은 index를 걸어도 조회속도가 느리다.
 해결법 -> 그래서 검색엔진이라는게 등장했다. (회사에서도 검색엔진 구매하고 따로 구축함)
 
-%w : 0~6 : 일~토
 ```

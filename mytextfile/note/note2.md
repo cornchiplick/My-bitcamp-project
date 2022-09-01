@@ -531,9 +531,39 @@
     1. IE 표기법 (Information Engineering Notation)
     2. ??
 
+---
+## 9/1
+- sha2 함수 : 원상태로 복구할 수 없는 단방향 암호화
+반드시 이렇게 하세요
+
+- join : 여러 테이블에 분산 저장된 데이터를 한 개의 데이터로 모으는 것
+
+- select 문에서
+    - `select all ~` : 평상시 사용하는 옵션 (생략가능)
+    - `select distinct ~` : 중복을 제거한다. 컬럼이 여러개일 경우 레코드값 전체를 기준으로한다.
+
+- union : 두 집합의 합집합을 의미한다. (중복을 제거한다.)
+- union all : 두 집합의 결과를 하나로 합치지만 중복 제거를 하지 않는다.
+- minus : 차집합 (Oracle 은 가능하지만 MySQL은 불가능!)
+대신 `not in` 절이 있다
+- intersect : 교집합 (Oracle 은 가능하지만 MySQL은 불가능!)
+대신 `in` 절이 있다
+- join : 여러 테이블에 분산 저장된 데이터를 한 개의 데이터로 모으는 것
+    - cross join( = cartesian join) : 기본 join : 모든 데이터를 연결시킨다.
+    의미없는 조인
+    - natural join : 우리가 원하는 join이지만... : 같은 이름을 가진 컬럼을 기준으로 레코드를 연결한다.
+    `select m.mno, name, s.mno, work, bank from memb m, stnt s where m.mno=s.mno;`
+    - inner join ~ on : on뒤의 기준 컬럼의 값이 일치할 때만 데이터 연결 
+    - left(right) outer join : 
 
 
+- group by 와 having : group by 와 함꼐 쓸 수 있는 함수 : sum, average, count, ...
 
+- 오라클 실행순서
+**from - where - group by - having - select - order by**
+
+- MariaDB 실행순서
+**from - where - group by - having - select - order by**
 
 ---
 ##### DML (Data Manipulation Language)
