@@ -70,6 +70,14 @@ alter table test1
 ```
 alter table test1
   add fulltext index test1_name_idx (name);
+----------------------------------------------
+CREATE UNIQUE INDEX UIX_stnt -- 인덱스명
+    ON stnt ( -- 테이블명
+        acc_no ASC, -- 통장번호 오름차순
+        bank ASC    -- 은행명 오름차순
+    );
+// unique 키와 인덱스 동시에 추가
+// unique를 생략하여 인덱스만 추가 가능
 ```
 
 - 컬럼에 옵션 추가
@@ -162,6 +170,9 @@ create table test1(
 조건을 지정하지 않으면 모든 데이터를 삭제한다.
 - `set autocommit=false;` & `set autocommit=true;` : 명령창의 내용이 즉시 table에 commit되는 기능을 끄거나 켠다.
 - `commit;` & `rollback` : commit=false 상태에서 작업내용을 적용하거나 마지막 commit 시점으로 되돌린다.
+- `DROP TABLE IF EXISTS 테이블명 RESTRICT;` : 만약 테이븖이 존재한다면 그 테이블을 삭제한다.
+<옵션> : `restrict` : 만약 테이블이 참조당하고 있을 경우 변경/삭제가 취소된다.
+
 
 ---
 ##### DQL(Data Query Language)
@@ -170,9 +181,48 @@ create table test1(
 출력 데이터형식 : no, name(class) 
 - `select 컬럼명 [as] 별명 ...` : 컬럼에 별명 붙히기
 as를 생략할 수 있다.
+- `select * from test1 where class like 'java%';` : 포함된 문자를 찾는다. `like`
+중간의 문자를 찾는 것은 index를 걸어도 조회속도가 느리다.
+
+
+###### 실행순서 : **from - where - group by - having - select - order by**
+###### select
+- `select 옵션 컬럼명 as 별명 from 테이블명;` : 테이블에서 컬럼들을 추출하여 보여준다.
+    - <옵션> `all` : 중복값을 무시하고 모든 데이터를 추출한다. 생략가능
+    - <옵션> `distinct` : 중복값이 있으면 한 개만 추출한다.
+    - <옵션> `as 별명` : 각 컬럼에 대한 별칭을 지정할 수 있다. `as` 생략가능
+
+###### where
+- `select 컬럼명 from 테이블명 where 조건문` : 조건문을 통과한 데이터들을 추출하여 보여준다.
+
+###### order by
+- `select 컬럼명s from 테이블명 order by 컬럼명o 옵션` : 컬럼명o에 따라 오름차순 정렬한다.
+    - `컬럼명o` : select절에 있는 컬럼 or 테이블에 존재하는 컬럼이어야 한다.
+    - <옵션> `asc` : 오름차순 정렬
+    - <옵션> `desc` : 내림차순 정렬
+
+###### union
+- `select절1 union select절2` : select절1 과 select절2 의 결과의 합집합을 추출한다.
+- `select절1 union all select절2` : select절1과 select절2 의 결과를 중복제거 없이 모두 보여준다.
+- `select 컬럼명 from 테이블명 where not 컬럼명 in (select절2)` : select절의 결과 중 select절2의 결과를 뺀 차집합을 보여준다.
+- `select 컬럼명 from 테이블명 where 컬럼명 in (select절2)` : select절의 결과와 select절2의 결과의 교집합을 보여준다.
+
+###### join : 너무 방대하여 command 형식 생략
+- **< cross join >**
+`select * from test1 cross join test2;` : test1의 각 데이터를 test2의 각 데이터와 모두 연결한다. `cross`는 생략가능하다.
+- **< natural join >**
+`select * from test1 natural join test2 using (aa);` : test1과 test2의 컬럼 중 같은 이름을 가진 컬럼을 기준으로 레코드를 연결한다. 하나뿐이라면 `using (같은 이름을 가진 컬럼명)`을 생략가능하다.
+- **< inner join >**
+`select * from test1 inner join test2 on 조건절` : 조건절을 통과한 test2의 데이터 중 from절에 있는 테이블과 비교하여 join한다. select구의 컬럼추가에는 제한이 없다. `inner`는 생략가능
+- **< outer join >**
+`selec * from test1 left outer join test2 on 조건절` : `inner join`과 동일하지만 from절의 테이블에 있는 값을 기준으로 하여 데이터를 모두 출력한다.
+
+######
+
 
 ---
 ##### 함수
+- `count(*)` : 데이터의 갯수를 한 줄에 출력한다. `*` 대신 컬럼명을 넣으면 해당 컬럼의 값이 null이 아닌 데이터만 카운트한다.
 - `now()` : 현재 날짜 및 시간
 - `curdate()` : 현재 날짜
 - `curtime()` : 현재 시간
@@ -334,6 +384,11 @@ insert into test1 (title, regdt) values('bbbb', str_to_date('11/22/2022', '%m/%d
     - `_` : 이 자리에 문자가 1개 있다.
 
 ---
+##### 서브쿼리
+- 각 `select절`, `from절`, `where절`,  `컬럼명` 등에 모두 `select절`을 사용할 수 있다.
+- 이는 조회성능을 크게 떨어뜨리므로 잘 생각하고 사용할것.
+
+---
 ### 3. key
 ![](./img/fig5.png)
 
@@ -371,12 +426,12 @@ insert into test1 (title, regdt) values('bbbb', str_to_date('11/22/2022', '%m/%d
 ```
 
 - FK(Foreign Key)
-    - 다른 테이블의 PK를 참조하는 컬럼이다.
+    - 다른 테이블의 **PK**를 참조하는 컬럼이다.
     - 다른 데이터를 참조하는 경우 해당 데이터의 존재 유무를 검사하도록 강제한다.
     - 다른 테이터에 의해 참조되는지 여부를 검사하도록 강제한다.
     - 다른 테이블의 데이터와 연관된 데이터를 저장할 때 무효한 데이터가 입력되지 않도록 제어하는 문법이다.
     - 다른 테이블의 데이터가 참조하는 데이터를 임의의 지우지 못하도록 제어하는 문법이다.
-    - 그래서 데이터의 무결성(data integrity; 결함이 없는 상태)을 유지하게 도와주는 문법이다.
+    - 그래서 데이터의 **무결성**(data integrity; 결함이 없는 상태)을 유지하게 도와주는 문법이다.
 
 - 다른 테이블에 의해 참조되는 테이블을 '**부모 테이블**'이라 부른다.
 - 다른 테이블의 데이터를 참조하는 테이블을 '**자식 테이블**'이라 부른다.
@@ -393,17 +448,9 @@ insert into test1 (title, regdt) values('bbbb', str_to_date('11/22/2022', '%m/%d
 
 ---
 ```
-sql의 convention :
+- sql의 convention :
 ex) where name='a'
     에서 '='앞뒤로 띄우거나 붙이거나 반반이다.
 
-1. from 에서 table을 찾아서, 
-2. where 에서 조건을 설정하고,
-3. select 에서 보여줄 column을 뽑아 보여준다.
-
-OracleDB는 from절 필수지만 MariaDB는 질의가능
-
-like %aaa% : 중간의 문자를 찾는 것은 index를 걸어도 조회속도가 느리다.
-해결법 -> 그래서 검색엔진이라는게 등장했다. (회사에서도 검색엔진 구매하고 따로 구축함)
-
+- OracleDB는 from절 필수지만 MariaDB는 질의가능
 ```
