@@ -8,7 +8,7 @@
 
 ---
 ### 0. Commands
-##### Basic
+#### Basic
 - `alter user 'root'@'localhost' identified by '1111';` : mysql root 암호 변경
 - `CREATE USER '사용자아이디'@'원격호스트주소' IDENTIFIED BY '암호';` : mysql 사용자 추가
 - `CREATE USER 'study'@'localhost' IDENTIFIED BY '1111';` : `로컬`에서만 사용할 수 있는 `study`사용자 추가 및 `1111`비밀번호 설정.
@@ -27,11 +27,9 @@
 
 
 ---
-##### DDL(Data Definition Language)
+#### DDL(Data Definition Language)
 - **`create table 테이블명 (컬럼명 타입 NULL여부 옵션, 컬럼명 타입 NULL여부 옵션, ...);` : 테이블 생성 기본형**
-
-!!! <memo> NULL 여부
-    NULL 여부에 대한 언급이 없으면 기본으로 NULL값을 허용한다.
+    > NULL 여부 : NULL 여부에 대한 언급이 없으면 기본으로 NULL값을 허용한다.
 
 - `describe 테이블명;` = `desc 테이블명;` : 테이블 정보 보기
 - `drop table 테이블명;` : 테이블 삭제하기
@@ -162,7 +160,7 @@ create table test1(
 ```
 
 ---
-##### DML(Data Manipulation Language)
+#### DML(Data Manipulation Language)
 - `insert into 테이블명(컬럼명, 컬럼명, ...) select절;` : select절의 결과를 insert한다.
 - `update 테이블명 set 컬럼명=값, 컬럼명=값, ... where 조건...;` : 등록된 데이터를 변경한다.
 조건을 지정하지 않으면 모든 데이터를 변경한다.
@@ -175,7 +173,7 @@ create table test1(
 
 
 ---
-##### DQL(Data Query Language)
+#### DQL(Data Query Language)
 - `select * from 테이블;` : **테이블의 데이터 조회 기본형**
 - `select no, concat(name,'(',class,')') from test1;` : 가상의 컬럼 값을 조회하기
 출력 데이터형식 : no, name(class) 
@@ -215,13 +213,20 @@ as를 생략할 수 있다.
 - **< inner join >**
 `select * from test1 inner join test2 on 조건절` : 조건절을 통과한 test2의 데이터 중 from절에 있는 테이블과 비교하여 join한다. select구의 컬럼추가에는 제한이 없다. `inner`는 생략가능
 - **< outer join >**
-`selec * from test1 left outer join test2 on 조건절` : `inner join`과 동일하지만 from절의 테이블에 있는 값을 기준으로 하여 데이터를 모두 출력한다.
+`selec * from test1 left outer join test2 on 조건절` : `inner join`과 동일하지만 from절의 테이블에 **있는 값**을 기준으로 하여 데이터를 **모두** 출력한다.
 
-######
+###### group by
+- `select 컬럼명1 from 테이블명 group by 컬럼명2` : 컬럼명2를 기준으로 그룹으롬 묶는다. 그룹으로 묶인 경우 그 그룹의 첫 번째 데이터값만 출력한다.
+    - `group by`를 사용한 경우 그룹 관련 함수를 사용할 수 있다. 그러나 `group by`절에는 사용할 수 없다.
+
+###### having
+- `select 컬럼명1 from 테이블명 group by 컬럼명2 having 조건절` : `group by`의 결과에서 최종 결과를 선택할 조건을 지정할 때 `having 조건절`을 사용한다.
+    - `조건절`에 사용하는 컬럼은 `컬럼명1` 또는 `컬럼명2`에 사용된 컬럼이어야 한다.
+    - `having`절에 집합 함수를 사용할 수 있다.
 
 
 ---
-##### 함수
+#### 함수
 - `count(*)` : 데이터의 갯수를 한 줄에 출력한다. `*` 대신 컬럼명을 넣으면 해당 컬럼의 값이 null이 아닌 데이터만 카운트한다.
 - `now()` : 현재 날짜 및 시간
 - `curdate()` : 현재 날짜
@@ -234,6 +239,7 @@ ex) `select datediff(curdate(), '2022-5-2');`
 - `date_format(날짜, 형식)` : 날짜에서 특정 형식으로 값을 추출하기
 ex) `select regdt, date_format(regdt, '%m/%e/%Y') from test1;`
 ```
+<2022년 8월 3일 수요일 오후 1시 33분 45초>
 - 년
     %Y : 2022
     %y : 22
@@ -242,15 +248,15 @@ ex) `select regdt, date_format(regdt, '%m/%e/%Y') from test1;`
     %m : 08
     %b : Aug
 - 일
-    %e : 7
-    %d : 07
+    %e : 3
+    %d : 03
 - 주
     %W : Wednesday
     %w : 3 :: 일~토 > 0~6
     %a : Wed
 - 시
     %p : PM
-    %h : 1
+    %h : 01
     %H : 13
     %l : 1
 - 분
@@ -289,7 +295,7 @@ insert into test1 (title, regdt) values('bbbb', str_to_date('11/22/2022', '%m/%d
 - 인덱스(index)
 
 ---
-##### 컬럼 타입
+#### 컬럼 타입
 - int
     - 4바이트 크기의 정수 값 저장
     - 기타 tinyint(1바이트), smallint(2바이트), mediumint(3바이트), bigint(8바이트)
@@ -334,7 +340,7 @@ insert into test1 (title, regdt) values('bbbb', str_to_date('11/22/2022', '%m/%d
     - 실제 컬럼을 생성할 때 tinyint(1) 로 설정한다.
 
 ---
-##### index
+#### index
 - 검색 조건으로 사용되는 컬럼인 경우 따로 정렬해 두면 데이터를 찾을 때 빨리 찾을 수 있다.
 - 특정 컬럼의 값을 A-Z 또는 Z-A로 정렬시키는 문법이 인덱스이다.
 - DBMS는 해당 컬럼의 값으로 정렬한 데이터 정보를 별도의 파일로 생성한다.
@@ -346,7 +352,7 @@ insert into test1 (title, regdt) values('bbbb', str_to_date('11/22/2022', '%m/%d
 - 대신 조회 속도는 빠르다.
 
 ---
-##### view
+#### view
 - view가 참조하는 테이블에 데이터를 입력한 후 view를 조회하면?
   => 새로 추가된 컬럼이 함께 조회된다.
 - 뷰를 조회할 때 마다 매번 select 문장을 실행한다.
@@ -355,13 +361,19 @@ insert into test1 (title, regdt) values('bbbb', str_to_date('11/22/2022', '%m/%d
 - 목적은 복잡한 조회를 가상의 테이블로 표현할 수 있어 SQL문이 간결해진다.
 
 ---
+#### Transaction
+- 여러 개의 DML 작업을 한 단위로 묶는 것을 가리킨다. `commit 과 rollback 사용`
+- 그 단위에 묶인 작업이 모두 성공할 때만 업무가 완성된다.
+
+---
 ### 2. DQL(Data Query Language)
 -  조회할 때 조건 지정하기
     - where 절과 연산자를 이용하여 조회 조건을 지정할 수 있다.
     - 이렇게 조건을 지정하여 결과를 선택하는 것을 "**셀렉션(selection)**" 이라 한다.
+- \+ `select 컬럼명 ...` 에서 컬럼명을 **Projection** 대상이라고 한다.
 
 ---
-##### 연산자
+#### 연산자
 - OR, AND, NOT
     - OR : 두 조건 중에 참인 것이 있으면 조회 결과에 포함시킨다.
     - AND : 두 조건 모두 참일 때만 조회 결과에 포함시킨다.
@@ -384,7 +396,7 @@ insert into test1 (title, regdt) values('bbbb', str_to_date('11/22/2022', '%m/%d
     - `_` : 이 자리에 문자가 1개 있다.
 
 ---
-##### 서브쿼리
+#### 서브쿼리
 - 각 `select절`, `from절`, `where절`,  `컬럼명` 등에 모두 `select절`을 사용할 수 있다.
 - 이는 조회성능을 크게 떨어뜨리므로 잘 생각하고 사용할것.
 
@@ -437,20 +449,13 @@ insert into test1 (title, regdt) values('bbbb', str_to_date('11/22/2022', '%m/%d
 - 다른 테이블의 데이터를 참조하는 테이블을 '**자식 테이블**'이라 부른다.
 
 ---
-
-
-
-
-
-
-
-
-
----
+#### etc.
 ```
-- sql의 convention :
-ex) where name='a'
-    에서 '='앞뒤로 띄우거나 붙이거나 반반이다.
+1. < sql의 convention >
+    ex) where name='a'
+    에서 '='앞뒤로 띄우거나 붙이거나 반반이다. (니맘대로다.)
 
-- OracleDB는 from절 필수지만 MariaDB는 질의가능
+2. OracleDB는 from절 필수지만 MariaDB는 질의가능
+    ex) select (4=5), (4!=5), (4>5), (4>=5), (4<5), (4<=5), (4<>5);
+    결과는 각각에 대하여 boolean값을 반환한다.
 ```
