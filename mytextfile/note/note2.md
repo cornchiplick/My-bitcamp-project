@@ -619,3 +619,103 @@
 - 모든 데이터가 `not null`인 테이블을 "**마스터 테이블**" 이라고 한다.
 - MDA(Model Driven Architecture) : 모델 구동형 아키텍처
     > 모델링을 먼저 하고 그걸 코드로 구현한다(?)
+
+---
+## 9/5
+#### JDBC
+1. DBMS Native API 등장
+    - DBMS Client 역할, 사람이 사용하는 것이 아니라, App이 사용
+    - `DBMS API : App에서 DBMS Server에게 SQL을 보낼 때 사용하는 메서드`
+        - DBMS Native API : DBMS 제조사가 제공해준다.
+        - 언어별로 제공
+    - 문제발생 ::
+        - DBMS에 맞춰 App을 개발해야 한다.
+        - DBMS에 종속된다.
+        - 똑같은 코드를 중복해서 개발해야 하는 문제도 발생.
+
+2. ODBC API (**O**pen **D**ata**B**ase **C**onnectivity)
+    - :: DBMS API의 표준 규격
+    - 규격에 따라 만든 API :: `~~ SQL ODBC Driver`
+    - API 규격이 같기 때문에 메서드 호출 코드도 동일하다
+    => DBMS마다 변경할 필요가 없다.
+
+3. JDBC API (**J**ava **D**ata**B**ase **C**onnectivity)
+    - java에서 c/c++기반인 odbc를 직접 호출할 수 없다.
+    => Java에서 DBMS와 연결할 자바전용 API가 필요!
+    - `java에서 DBMS와 연결할 때 사용하는 객체의 호출규격을 정의한 것`
+    => `interface`
+    - **JDBC Driver** : 규격에 따라 클래스와 메서드를 구현한 것
+    - **Type 1 Driver**
+        - ODBC API를 호출하는 JDBC Driver
+        - Local에 ODBC API 설치 필요
+        - "ODBC-JDBC Bridge 드라이버"
+        - JRE에 기본으로 포함되어 있다.
+
+4. JDBC API : **Type 2 Driver**
+    - :: "JDBC Native Call 드라이버"
+    - 각 DBMS의 Native API를 호출한다.
+    - ODBC API 사용하지 않음.
+    - Local에 DBMS API 설치 필요
+    - DBMS Vendor로부터 다운로드 받아야 한다.
+
+- Type1이든 Type2든 둘 다 JDBC API 규격에 따라 작성되었기 때문에 사용법이 같다.
+=> Java App을 변경할 필요가 없다.
+
+5. JDBC API : **Type 3 Driver**
+    - DBMS가 변경되면 Native API/ODBC API + Type2 Driver 변경해야 한다.
+    - DBMS에 종속되는 문제를 **중간서버** :: "**Middleware(미들웨어)**"를 이용해서 해결했다.
+    - DBMS를 바꾸더라도 Local쪽은 변경할 필요가 없다.
+    - Local에는 DBMS와 관련된 파일을 설치할 필요가 없다.
+    - :: "**네트워크 드라이버**"
+
+6. JDBC API : **Type 4 Driver**
+    - local에 ODBC API/Native API를 설치할 필요가 없다.
+    - JDBC Driver만 설치한다. => "**Pure Java**"
+    - DBMS서버와 직접 통신
+    - DBMS Vendor에 다운로드 해야한다.
+    - DBMS 변경되면 Driver도 변경해야 한다.
+    - :: "**DBMS Protocol Driver**"
+
+---
+#### JDBC Programming
+- JDBC API
+    - java.sql.*
+    - javax.sql.*
+
+1. JDBC Driver 다운로드
+2. 프로젝트 classpath에 추가
+3. JDBC API 규칙에 따라 call
+
+---
+#### JDBC Programming 절차
+1. `java.sql.Driver` 구현체 준비
+=> JDBC Driver에 대한 정보를 갖고 있다.
+2. `java.sql.DriverManager` 에`Driver 구현체` 등록
+3. `DriverManage`를 통해 `java.sql.Connection` 객체 얻기
+=> DBMS와의 연결정보 갖고있다.`
+4. `Connection`을 통해 `java.sql.Statement/PreparedStatement` 객체를 준비시킨다. `<= SQL을 서버에 보내고 응답을 받는 일을 한다.`
+5. `Statement/PreparedStatement` 를 통해 `java.sql.Resultset`을 얻는다.
+=> DBMS의 select 결과를 한 개씩 가져오는 일을 한다.
+
+- 참고 자료
+![](./img/fig9.png)
+
+---
+###### 클래스 로딩
+1. `new 클래스();` : 인스턴스를 생성할 때
+2. `클래스.스태틱필드 = 값;` : 스태틱 필드를 사용할 때
+3. `클래스.스태틱메서드();` : 스태틱메서드를 호출할 때
+4. `Class.forName("패키지.클래스");` : 명시적으로 코딩 :: "**fully-qualified class name" = "FQName" = "QName"**
+
+---
+###### argument
+`java -Dname=aaa -Dage=30 Hello aaa bbb ccc`
+- program argument : `aaa bbb ccc`
+- VM argument : `-Dname=aaa -Dage=30`
+
+---
+- META-INF / java.sql.Driver : 이 '부가정보'라는 폴더 아래에 '클래스'파일에 대한 정보가 있다.
+- `service-provider loading`규칙에 따라 자동으로 드라이버를 로딩한다.
+![](./img/fig10.png)
+
+!!! <memo> 바로 위에 꼭 그림추가하세요 계속 업뎃되니까 최신판으루
