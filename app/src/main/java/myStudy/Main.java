@@ -1,3 +1,5 @@
+package myStudy.ex01;
+
 import java.lang.Math;
 import java.util.Scanner;
 

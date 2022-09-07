@@ -459,3 +459,71 @@ insert into test1 (title, regdt) values('bbbb', str_to_date('11/22/2022', '%m/%d
     ex) select (4=5), (4!=5), (4>5), (4>=5), (4<5), (4<=5), (4<>5);
     결과는 각각에 대하여 boolean값을 반환한다.
 ```
+
+---
+
+---
+# JDBC
+1. `java.sql.Driver` 구현체 준비
+=> JDBC Driver에 대한 정보를 갖고 있다.
+2. `java.sql.DriverManager` 에`Driver 구현체` 등록
+3. `DriverManage`를 통해 `java.sql.Connection` 객체 얻기
+=> DBMS와의 연결정보 갖고있다.`
+4. `Connection`을 통해 `java.sql.Statement/PreparedStatement` 객체를 준비시킨다. `<= SQL을 서버에 보내고 응답을 받는 일을 한다.`
+5. `Statement/PreparedStatement` 를 통해 `java.sql.Resultset`을 얻는다.
+=> DBMS의 select 결과를 한 개씩 가져오는 일을 한다.
+
+- 참고 자료
+![](./img/fig10.png)
+
+---
+### 0. Commands
+- Driver 구현체를 생성하고, 등록하고 DBMS와의 연결을 한번에 한다.
+```
+java.sql.Connection con = DriverManager.getConnection(
+            "jdbc:mariadb://localhost:3306/studydb?user=study&password=1111");
+```
+
+- `java.sql.Statement stmt = con.createStatement();` : `ResultSet` 객체를 얻는다. **하지만 Statement 객체는 sql삽입공격에 취약할 수 있다.**
+- `stmt.executeUpdate("sql문");` : java에서 DBMS를 향해 데이터를 조작하는 명령을 보낸다.
+- `stmt.executeQuery("sql문");` : java에서 DBMS를 향해 데이터조회를 요청하는 명령을 보낸다.
+- `rs.next();` : 데이터 조회를 요청하여 레코드를 1개 가져오는데에 성공했다면 true, 아니라면 false를 리턴한다.
+- `rs.getXxx(컬럼번호);` : 테이블을 생성할 때 작성한 순서대로 컬럼번호가 매겨진다.
+배열과 달리 첫번호는 1번이다.
+    - `getInt();` : int, number 
+    - `getString();` : char, varchar, text
+    - `getDate(), getTime()` : date, time, datetime
+    - `getFloat()` : float
+- `rs.getString("board_id");` : 컬럼번호 대신 컬럼명을 써서 가독성을 높일 수 있다.
+
+---
+###### SQL 공격 차단하기
+- `PreparedStatement stmt = con.prepareStatement("insert into x_board(title,contents) values(?,?)")` : `준비된문장` 객체를 얻기위해 `준비하라문장();` 을 이용한다. **이 문법은 sql삽입공격을 차단한다.**
+`?`는 값이놓일 자리, **in-parameter** 라 한다.
+- `stmt.setString(1, title);` : `1`번째 `?`값에 `값(title)`을 넣는다.
+
+---
+### 1. Statement vs PreparedStatement
+
+1. SQL 문장의 간결함
+- [Statement]
+    - 값을 가지고 문자열로 직접 SQL 문을 만들기 때문에 작성하거나 읽기 힘들다.
+- [PreparedStatement]
+    - SQL 문장과 값이 분리되어 있기 때문에 작성하거나 읽기 쉽다.
+2. SQL 삽입 공격
+- [Statement]
+    - 사용자가 입력한 값을 가지고 SQL 문장을 만들기 때문에 해킹되기 쉽다.
+- [PreparedStatement]
+    - SQL 문장과 값이 분리되어 다뤄지기 때문에 해킹할 수 없다.
+3. 바이너리 데이터 다루기
+- [Statement]
+    - 문자열로 SQL 문장을 만들기 때문에 바이너리 타입의 컬럼 값을 설정할 수 없다.
+- [PreparedStatement]
+    - setXxx() 메서드를 호출하여 값을 설정하기 때문에 바이너리 타입의 컬럼 값을 설정할 수 있다.
+4. 실행 속도
+- [Statement]
+    - executeUpdate()를 실행할 때 SQL 문을 파라미터로 전달한다.
+    - 호출될 때마다 SQL 문법을 분석하기 때문에 반복 실행하는 경우 SQL 문법도 반복 분석하므로 실행 속도가 느리다.
+- [PreparedStatement]
+    - 미리 SQL 문을 작성한 다음 DBMS 프로토콜에 맞게 파싱해 놓은 후, executeUpdate() 호출한다.
+    - 따라서 executeUpdate()를 호출할 때 마다 SQL 문법을 분석하기 않으므로 반복해서 실행하는 경우, Statement 보다 실행 속도가 빠르다.
