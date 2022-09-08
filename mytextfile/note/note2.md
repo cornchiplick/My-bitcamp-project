@@ -773,3 +773,38 @@
 ## 9/7
 - 실습
 
+---
+## 9/8
+###### Connection 객체 공유
+- Connection객체 생성에 시간이 많이 소요되는 이유
+    1. 사용자 인증 수행(Authentication)
+    2. 권한 검사(Authorization)
+    => "**Auth(인증, 권한)**"
+
+- 의존 객체 주입 **(Dependency Injection; DI)**
+    - 객체 공유가 쉽다
+    - 기존 코드를 손대지 않고 객체를 교체할 수 있다.
+
+- 의존 객체 주입 방식 적용 전
+    - DAO 클래스가 바뀔때마다 Handler 클래스를 변경해야 한다.
+    - DAO 클래스의 사용규칙이 없다
+    => 개발자가 자기맘대로 메서드를 정의.
+    => DAO 변경시 DAO를 사용하는 Handler의 코드를 더 많이 변경해야 한다.
+    - 인터페이스를 이용해서 미리 형식을 정의해둔다.
+
+- 인터페이스 :  객체 사용 규칙을 정의하는 문법
+
+---
+###### Application Server 구조로 전환
+- 이전 구조
+    1. local에 App 설치
+    => app기능변경 => local에 App 재설치 => **유지보수 어렵다**
+    2. 원격의 DBMS 공유
+    => local에서 접속 => local에 설치된 실행파일을 통해 원격 DBMS의 접속정보를 알아낼 수 있다. => **보안에 매우 취약**
+
+- 해결책 : Application Server Architecture
+    - UI담당의 'Client App'과 실제작업수행담당의 'Server App'으로 나눈다.
+    => **App 기능 변경이 쉽다.** => local의 App을 재설치 할 필요가 없다. => local App은 서버가 응답한 결과를 단순히 출력하는 일만 한다.
+    - local에서 DBMS에 직접 접근하는 것을 막는다.
+    => **보안문제 해결**
+    
