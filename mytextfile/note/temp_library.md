@@ -337,7 +337,7 @@
 ```
 
 한줄 시리즈
-- 용어 정리 : SI, SM, breadcrumb, 캡슐화(객체화?), CSV, XML, JSON
+- 용어 정리 : SI, SM, breadcrumb, 캡슐화(객체화?), CSV, XML, JSON, JIT(Just In Time)
 - 인터프리터 컴파일
 - jdk, jre, ee
 - msb, lsb
