@@ -820,6 +820,54 @@
 - Algorithm 1Q/일
 - 모두의네트워크 1챕/일
 
+- [도서] 모던 웹을 위한 HTML5+CSS3 바이블
+- [도서] 모던 웹을 위한 javascript + jquery 입문? - 애매
+
 ---
 ## 9/14
 - Thread safe : 여러 스레드가 동시에 해당 코드를 실행하더라도 문제가 없는 경우.
+
+---
+## 9/15
+- 웹 애플리케이션 서버 - 웹 기술 도입
+
+1. 웹기술 도입 전
+    - ClientApp : UI제공
+        - 네트워킹 프로그래밍
+        - UI 프로그래밍
+    - ServerApp : 비즈니스 로직 실행
+        - 네트워킹 프로그래밍
+        - 멀티스레딩
+        - DB 프로그래밍
+    - MariaDB : 데이터 처리
+
+2. 웹기술 도입 후
+    - ClientApp => Web Browser 로 대체
+        - 네트워킹 프로그래밍 X
+        - UI 프로그래밍 X
+    - ServerApp => Web Server 로 대체
+        - 네트워킹, 멀티스레딩 => 자바 API 사용
+    - App
+        - 비즈니스 로직
+        - DB 프로그래밍 + UI 기술(**HTML**)
+    - MariaDB
+
+
+---
+- 통신시 HTTP 프로토콜 사용하여 통신 => 국제 표준 프로토콜 사용하므로 프로토콜 정의가 필요없다.
+- AS(**A**pplication **S**erver)
+- HTTP(**H**yper-**T**ext **T**ransfer **P**rotocol)
+- Markup : 출판용어, 데이터의 구조를 명기하는 언어
+- HTML(**H**yper-**T**ext **M**arkup **L**anguage) : 고수준의 논문을 작성할 수 있는 제어문법 언어 로 시작.
+- **Web Browser** = HTTP Client / **Web Server** = HTTP Server
+
+---
+- URL의 구성
+![](./img/fig11.png)
+
+### 위에 38페이지 그림 넣기
+
+---
+- 태그(tag) = 엘리먼트(element)
+    - <시작태그>, <\/끝태그>
+    - <태그명 속성명(attribute)='값'>
