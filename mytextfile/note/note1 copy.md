@@ -308,19 +308,7 @@ Open JDK > Oracle JDK > GraalVM
 3. Expression(표현식)
 
 ---
-- process와 메모리
-- java.exe : 컴파일러 프로그램
-    - 프로그램 = application s/w
-    - 이 app을 실행시키면 java.exe는 프로세스( = 실행중인 프로그램 = 실행중인 app)가 된다.
 
-1. process가 OS에게 [실행되는 동안 데이터를 보관할 때 사용할 메모리를 달라고 요청] 한다.
-2. OS가 H/W인 RAM에서 빼오는걸 허락함.
-3. process가 메모리를 사용.
-
-- JVM은 OS에게 할당받은 메모리를 크게 3구획으로 나눠서 관리한다.
-1. Method Area
-2. JVM Stack (스레드 당 하나)
-3. Heap
 
 - "=" : assignment operator : 할당/배정/대입 연산자
     - l-value : 변수"만" 올 수 있다.
@@ -663,37 +651,7 @@ new 연산자를 이용하여 인스턴스를 만들 때 자동으로 호출되�
 - GRASP : 객체지향프로그래밍의 핵심
 
 ---
-- 클래스 변수와 인스턴스 변수
-    > 클래스 변수 : static 변수
-    > 인스턴스 변수 : non-static 변수
 
-```java
-    class A{
-        int a;
-        int b;
-        static int c;
-    }
-```
-일 때
-```java
-A obj1 = new A();
-A obj2 = new A();
-```
-라고 하면
-```
-Method Area 에
-    1) A클래스가 로딩됨
-    2) static 변수 로딩됨 (=c)
-JVM Stack 에
-    3) 로컬변수 obj1, obj2 가 생성됨
-Heap 에
-    4) a, b를 인자로 하는 obj1이 가리키는 인스턴스와
-    5) a, b를 인자로 하는 obj2이 가리키는 인스턴스를 생성.
-
-// method가 있다면 Method Area에 생김
-// 메서드는 static 이든 아니든 Method Area에 생김
-// Heap에 없다!
-```
 
 ---
 - 여러 곳에서 사용할 클래스라면 분리해서 관리하는게 유지보수에 좋다.
@@ -781,13 +739,7 @@ class Board extends Object {}
 
 ---
 ## 7/25
-- 클래스 로딩과 실행
-    1. .class 파일 찾는다
-    2. Bytecode 검증
-    3. Method Area에 로딩
-    4. 스태틱 필드 생성
-    5. 스태틱 블록 실행
-    6. main() 호출
+
 
 ```java
     void m4(int value) {
@@ -803,17 +755,7 @@ class Board extends Object {}
 ---
 - 인스턴스를 만든 후에 즉시 생성자를 호출할 수 있다. 그 외에는 호출 불가능하다.
 
-- 클래스가 로딩되는 경우,
-    1. 스태틱 필드나 스태틱 메서드를 사용할 때
-    2. 인스턴스를 생성할 때(new 명령을 실행할 때)
 
-- 스태틱 초기화 블럭 **(static initializer)**
-    `static {}`
-- 변수 초기화 블럭 **(variable initializer)**
-- 인스턴스 초기화 블럭 **(instance initializer)**
-    `{}` : 그냥 이렇게만 쓴다.
-    - 생성자가 없어도 만들 수 있고, 생성자가 있으면 생성자의 앞 부분에 삽입된다.
-    - 필드 초기화 문장은 무적권 제~일 앞으로 간다.
 
 ---
 ## 7/26
