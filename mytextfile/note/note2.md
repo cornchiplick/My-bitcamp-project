@@ -812,10 +812,10 @@
 ---
 ## 9/13
 할일
-- velog 정리
-- 팀플
+- velog 정리 - 6/29 ~ 챕터별로
+- 팀플 큰똥
 - git 공부
-- os 공부
+- 지연이책 뺏어서 os 공부
 
 - Algorithm 1Q/일
 - 모두의네트워크 1챕/일
@@ -865,7 +865,7 @@
 - URL의 구성
 ![](./img/fig11.png)
 
-### 위에 38페이지 그림 넣기
+### 위에 37 ? 페이지 그림 넣기
 
 ---
 - 태그(tag) = 엘리먼트(element)
@@ -910,3 +910,32 @@
     - 수퍼클래스, 인터페이스, 필드, 생성자, 메서드의 상세 정보.
 - 개발자가 사용하기 쉽게 포장한 것
     - `org.reflection.*` 라이브러리
+
+---
+## 9/19
+- 모든 타입은 class라는 static 변수를 갖는다. (만들지 않아도!) (인터페이스, 애노테이션, 클래스 등)
+
+---
+##### 객체 생성 방법
+1. String s = new String(); `기본 생성자`
+2. String s2 = new String("Hello"); `파라미터`
+3. Class<?> classInfo = Class.forName("java.lang.String"); `클래스 정보`
+    - String x2 = classInfo.newInstance(); `deprecated (지양해야 할 방법)`
+    1. 생성자를 알아낸다.
+    `Constructor<?> c = classInfo.getConstructors()[0];`
+    2. 생성자를 통해 인스턴스 생성
+    `c.newInstance();`
+
+---
+- Servlet/JSP : 자바로 웹서버를 개발할 때 이런식으로하세요~
+- 톰캣 내장 웹서버 / 톰캣 내장 어플리케이션
+
+---
+![](./img/fig12.png)
+
+## 48p ? 위에 그림 꼭 넣기
+
+---
+- build.gradle 변경
+  - id 'eclipse-wtp' 플러그인 추가 : 웹 애플리케이션 관련 설정 파일을 추가로 생성한다.
+  - id 'war' 플러그인 추가 : .war 배포 파일을 생성한다.

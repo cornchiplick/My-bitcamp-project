@@ -104,3 +104,8 @@ ls -al
 # : comments
 #! : ??comments는 아님
 ---------------------------------------
+
+tomcat서버 있는 폴더/bin 에서
+chmod 755 *.sh
+./startup.sh 으로 실행
+./shutdown.sh 으로 종료
