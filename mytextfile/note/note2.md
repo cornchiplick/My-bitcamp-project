@@ -865,8 +865,6 @@
 - URL의 구성
 ![](./img/fig11.png)
 
-### 위에 37 ? 페이지 그림 넣기
-
 ---
 - 태그(tag) = 엘리먼트(element)
     - <시작태그>, <\/끝태그>
@@ -933,9 +931,70 @@
 ---
 ![](./img/fig12.png)
 
-## 48p ? 위에 그림 꼭 넣기
-
 ---
 - build.gradle 변경
   - id 'eclipse-wtp' 플러그인 추가 : 웹 애플리케이션 관련 설정 파일을 추가로 생성한다.
   - id 'war' 플러그인 추가 : .war 배포 파일을 생성한다.
+
+---
+## 9/20
+- 기업용 App 제작에 필요한 기술 (Java EE)
+  - Servlet/JSP 기술 : 웹 애플리케이션 제작 자바 표준 기술
+    - **Spring WebMVC Framework로 대체**
+  - EJB : 분산 컴포넌트 제작 기술
+    - (+) **Pure Java 기술로 객체 관리 : Spring Framework (서버가 필요 없다)**
+  - Web Service : WSDL, SOAP, XML 등 웹서비스 구현 기술
+    - **RESTful 기술로 대체 : JSON, Ajax**
+  - 자원관리 및 공유 : **Spring Framework**
+
+- 위의 것들을 위한 tool : **Spring Boot**
+
+---
+##### Java EE 기술과 구현 서버(implements)
+- Java EE Implements (Java EE 구현 서버) : Java EE 기술 규격에 맞춰서 동작하도록 제작된 서버
+  - Weblogic (Oracle) : 유
+  - WebSphere (IBM)
+  - JBOSS
+  - JEUS
+  - ...
+
+- <u>**Java EE 기술 규격에 맞춰 제작된 App이라면 어떤 Java EE 서버에서도 실행할 수 있다.**</u>
+
+---
+- Java EE
+  - Web App 개발 기술
+    - Servlet/JSP
+      - Tomcat 서버
+      - Resin 서버
+      - Jetty 서버
+    - JSF, JSTL
+      - 옵션
+
+- Web Container `= Servlet Container` : Java EE 기술 중 Servlet/JSP 기술 규격만 지원하는 서버
+  - Servlet : 실행
+  - JSP : 실행
+  - JSF : 라이브러리 추가 필요
+  - JSP+JSTL : 라이브러리 추가 필요
+  - EJB : 실행 불가
+  - Web Service : 실행 불가
+
+---
+- Java EE 는 이클립스 재단에서 Jakarta EE 라는 이름으로 유지보수하고 있지만 아무도 사용하지 않는다.
+
+---
+- 서블릿 컨테이너에 배포하는 웹 애플리케이션의 디렉토리 구조
+![](./img/fig13.png)
+
+## 위에 12p 꼭 넣기
+
+- DDFile : Deployent Descriptor File : 배치 설명 파일 (web.xml)
+
+---
+- 서블릿 컨테이너가 관리하고 실행하는 웹 애플리케이션 컴포넌트(부품)(객체)
+  - 서블릿 : 요청 처리
+  - 필터 : 서블릿 실행 전/후 보충작업
+  - 리스너 : 서블릿 컨테이너가 특정 상태에 놓일때 실행
+    - 특정 상태(이벤트(사건))
+      - 요청 발생
+      - 세션 생성, 소멸
+      - 서버가 시작/종료
