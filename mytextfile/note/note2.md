@@ -990,7 +990,7 @@
 - DDFile : Deployent Descriptor File : 배치 설명 파일 (web.xml)
 
 ---
-- 서블릿 컨테이너가 관리하고 실행하는 웹 애플리케이션 컴포넌트(부품)(객체)
+- 서블릿 컨테이너가 관리하고 실행하는 웹 애플리케이션 **컴포넌트**(부품)(객체)
   - 서블릿 : 요청 처리
   - 필터 : 서블릿 실행 전/후 보충작업
   - 리스너 : 서블릿 컨테이너가 특정 상태에 놓일때 실행
@@ -998,3 +998,59 @@
       - 요청 발생
       - 세션 생성, 소멸
       - 서버가 시작/종료
+      - etc
+
+---
+## 9/21
+- <\<interface\>> Servlet : HTTP 클라이언트 요청이 들어왔을 때 그 요청을 처리하는 객체에 대해 서블릿 컨테이너가 호출하는 메서드 규칙.
+  - init()
+    - 서블릿 객체가 작업할 때 사용할 자원을 준비시키는 코드를 둔다.
+  - service()
+    - 요청을 처리하는 코드를 둔다.
+  - destroy()
+    - 서버 종료 시 또는 웹앱 실행 중지 시에 호출된다.
+    - 생성된 모든 서블릿에 대해서 호출된다.
+    - init()에서 준비했던 자원을 해제시키는 코드를 둔다.
+  - getServletInfo()
+    - 서버 관리 화면을 실행할 때 호출된다.
+  - getServletConfig()
+    - 서블릿과 관련된 배치정보를 조회할 때 사용.
+
+---
+- 서블릿`Life Cycle`과 관련된 메서드 3종
+  - init()
+  - destroy()
+  - service()
+
+1. 요청
+2. service()
+  - 서블릿 객체는 최소 요청이 들어올 때 생성된다.
+  - 오직 한 번만 생성한다. = 서블릿 객체는 한 개다.
+  - init()도 한 번만 호출된다.
+```
+if (not exist) {
+    서블릿 객체 생성 -> init()
+}
+service();
+```
+
+---
+##### GenericServlet
+- <\<abstract\>> GenericServlet
+  - init(){}
+  - destroy(){}
+  - getServletInfo(){}
+  - getServletConfig(){}
+- 개발자의 편의를 위해 
+
+---
+##### <\<abstract\>> HttpServlet = GenericServlet + HTTP 프로토콜 정보를 다루는 메서드
+- 실무에서 많이 쓴다.
+`class HttpServlet extends GenericServlet`
+- service(){}
+  - doGet()
+  - doPost()
+  - doHead()
+  - etc
+
+---

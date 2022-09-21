@@ -227,3 +227,13 @@ Open JDK > Oracle JDK > GraalVM
     > byte, short, int, long, float, double, boolean, char
 
 ---
+- stakeholder : 투자자, 관계자
+
+---
+```
+String s1 = new String("Hello");
+
+UML 표기법 -> s1:String
+```
+
+---
