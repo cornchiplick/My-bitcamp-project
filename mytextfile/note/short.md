@@ -237,3 +237,45 @@ UML 표기법 -> s1:String
 ```
 
 ---
+- cmd 에서 즉시 실행할 수 없다.
+    > Hello.class
+> 완전한 기계어가 아니기 때문에
+> Hello.class파일을 기계어로 바꿔주려면 JVM(Java.exe)이 필요하다
+
+---
+- 요즘은 monolotic system에서 micro-service 로 바뀌고 있음 : class보다 method(=functional program)로 쪼개서 나중에 합치기 때문
+
+---
+- final ::
+    > 원래의 특성을 변경한다 = modifier
+
+---
+- 컴파일 옵션 ::
+    ```java
+    javac -encoding UTF-8 -d bin/main -sourcepath src/main/java src/main/java/com/bitcamp/board/App.java
+    ```
+    - `-sourcepath` : 소스파일에서 참조하는 클래스가 있는 파일의 경로를 알려준다.
+
+---
+- whitespace : space, tap, newline
+
+---
+
+- **optimizing(최적화)** vs **refactoring(코드개선)**
+    - 최적화 : 속도상승, 코드 난해해짐 ( = 유지보수 어려워짐)
+    - 코드개선 : 유지보수 용이성 좋아짐, 속도 저하
+    > 자바 개발자는 refactoring에 초점을 맞춘다.
+    > 속도에 신경을 쓸 것 같으면 애초에 자바말고 c를 쓰셈
+
+---
+- General Responsible Assignment Software Patterns ::
+> GRASP 패턴
+> 객체지향의 근본 패턴
+
+- GRASP(General Responsibility Assignment Software Pattern)
+    > 클래스에 책임 부여 방법론
+
+---
+> **역할을 수행하는 클래스 = 객체**
+
+---

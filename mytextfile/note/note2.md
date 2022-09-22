@@ -815,7 +815,7 @@
 - velog 정리 - 6/29 ~ 챕터별로
 - 팀플 큰똥
 - git 공부
-- 지연이책 뺏어서 os 공부
+- 최지연 씨 책 뺏어서 os 공부
 
 - Algorithm 1Q/일
 - 모두의네트워크 1챕/일
@@ -1054,3 +1054,122 @@ service();
   - etc
 
 ---
+## 9/22
+##### 서블릿 객체 생성과 init()
+1. 톰캣서버 관련 객체 생성
+2. 웹 애플리케이션 관련 객체 생성
+  - ServletContext
+  - 서블릿 객체 준비 : `각각의 서블릿 객체에 대해 수행`
+    - 단, `loadOnStartup` 설정이 되어 있는 경우.
+    1. ServletConfig 객체 생성
+    2. 서블릿 객체 생성 `생성자 호출`
+    > 아직 ServletConfig 객체 주입 전!
+    3. init() 호출 : ServletConfig 객체 주입
+
+---
+- 언제 서블릿 객체를 준비하는가
+  1. `loadOnStartup` 설정된 경우 : 웹앱이 시작할 때
+  2. 요청이 들어올 때(생성되어 있지 않다면)
+
+---
+- JWT : 기존의 세션 방식에 문제가 있어서 나온 방식
+  - 기존 방식 문제 : 토큰을 무효화 시키는데 그게 무효화가 안됨. -> 토큰 무효화 코드를 추가로 작성해야 한다.
+
+
+---
+# 중요
+- 서블릿/JSP가 사용할 수 있는 공식 보관소
+
+![](./img/fig13.png)
+
+## 23p 위에 꼭 넣기!
+
+#### 객체 LifeCycle
+- ServletContext : 웹앱당 한 개 생성 / 웹앱 종료시 소멸
+  > DAO, Service, Connection 등
+- HttpSession : 웹 블우저 당 한 개 생성(보통 그렇다, chrome은 제외) / 로그아웃/타임아웃/무효화 시 소멸
+  > 로그인 사용자 정보, 여러 페이지에 걸쳐서 입력하는 데이터
+- ServletRequest : 요청시에 생성 / 응답할 때까지 유지
+  - forward 랑 include 쓰는 servlet은 같은 ServletRequest 객체를 공유한다.
+  > 요청을 처리하는 동안 서블릿끼리 공유할 데이터
+- JspContext : JSP 실행하는 동안만 유지
+  > JSP를 실행하는 동안 사용할 값
+
+---
+##### Listener
+- 자원을 서블릿이 준비하거나 리스너가 준비하거나 중에 하나입니다~
+- <\<interface\>> ServletContextListener : `ServletContext`가 생성 / 소멸 될 때
+- <\<interface\>> ServletRequestListener : `ServletRequest`가 생성(요청이 들어올 때) / 소멸(응답을 완료할 때) 될 때
+- <\<interface\>> HttpSessionListener : `HttpSession`이 생성 / 소멸 될 때
+
+---
+- `ContextLoaderListener` 클래스
+  - `contextInitializaed(){}` : `Servlet`/`Filter` 등에서 공유할 자원을 준비하여 `ServletContext`에 보관한다.
+  - `contextDestroyed(){}` : `ServletContext`에 보관된 자원 중에서 명시적인 해제가 필요한 자원에 대해 메모리해제 작업을 수행한다.
+
+---
+### JSP
+- [요청] -> `Tomcat Server` -> 요청 -> `welcome.jsp` -> jsp엔진이 변환 -> `*.java` -> java컴파일러 -> *.class
+  > jsp 엔진 : 컴파일러
+  > *.java : 서블릿 구현체
+  > *.class : 서블릿 클래스
+
+---
+##### JSP Template
+1. JSP Template `= 자바 소스 코드를 만드는 틀로서 사용`
+  > 출력할 콘텐트
+
+2. JSP Template Engine 에 의해 변환
+3. 서블릿 클래스
+  > 자바 소스 파일
+
+---
+##### Template engine
+
+```
+md, Thymeleaf, FreeMarker, JSP
+가 HTML문서로 변환되고
+이는 Web Browser로 송출된다.
+```
+
+- JSP, Thymeleaf, FreeMarker 는 Spring WebMVC Framework 에서 사용.
+> JSP와 Thymeleaf 주로 사용.
+
+---
+- JavaScript의 템플릿 엔진을 TypeScript도 쓴다. 그래서 TS를 JS로 변환해서 JS엔진으로 실행한다.
+
+---
+##### JSP 문법 요약
+- jsp 문법 -> 변화? -> 자바 소스 
+- `일반 텍스트` -> 변환 -> `out.write("일반텍스트");`
+- <% `자바코드` %> -> 복사 -> `자바 코드`
+  > jsp의 자바 코드 : `scriptlet`
+- <%@ `태그 및 속성` %> -> 변환 -> `자바 코드`
+  > jsp의 태그 및 속성 : `directive element`
+- <%! `필드 및 메서드 선언` %> -> 복사 -> `필드 및 메서드 선언`
+  > jsp의 필드 및 메서드 선언 : `declaration element`
+- <%= `표현식(expression)` %> -> 변환 -> `out.print(표현식);`
+  > jsp의 표현식 : `expression element`
+- <jsp:태그 속성=값 ...\/> -> 변환 -> 자바 코드
+  > JSP Action Tag(jsp 전용 태그)
+
+---
+##### MVC 모델1 과 MVC 모델2
+- MVC : **M**odel **V**iew **C**ontroller
+  - Model : 업무로직 수행
+    > DAO, Service, ...etc
+  - View : UI생성
+  - Controller : 요청 제어
+
+1. MVC 모델1
+  - `web brower` >요청> `JSP` >call> `Java` >질의> `DBMS`
+  - `java` >생성> `Domain객체`
+  > `java` : Model
+  > `JSP` : Controller 겸 View
+  > `java/Domain객체` : VO객체(Value Object), DTO객체(Data Transfer Object)
+
+2. MVC 모델2 : 현업에서 쓰인다.
+  - `web brower` >요청> `Servlet` >call> `DAO, Service, ...` >질의> `DBMS`
+  - `Servlet` >위임> `JSP`
+  > `Servlet` : Controller
+  > `JSP` : View
