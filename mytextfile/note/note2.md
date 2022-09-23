@@ -1162,14 +1162,105 @@ md, Thymeleaf, FreeMarker, JSP
   - Controller : 요청 제어
 
 1. MVC 모델1
-  - `web brower` >요청> `JSP` >call> `Java` >질의> `DBMS`
+  - `web browser` >요청> `JSP` >call> `Java` >질의> `DBMS`
   - `java` >생성> `Domain객체`
   > `java` : Model
   > `JSP` : Controller 겸 View
   > `java/Domain객체` : VO객체(Value Object), DTO객체(Data Transfer Object)
 
 2. MVC 모델2 : 현업에서 쓰인다.
-  - `web brower` >요청> `Servlet` >call> `DAO, Service, ...` >질의> `DBMS`
+  - `web browser` >요청> `Servlet` >call> `DAO, Service, ...` >질의> `DBMS`
   - `Servlet` >위임> `JSP`
   > `Servlet` : Controller
   > `JSP` : View
+
+---
+## 9/23
+#### use-case 모델링 - 요구사항 식별
+###### actor : 우리 시스템을 사용하는 사람이나 **프로세스** `= 외부 시스템`를 가리킨다.
+1. 주액터와 보조액터
+- Primary Actor : 시스템을 사용하는 액터
+- Secondary Actor `= Supplementary Actor` : 우리가 개발할 시스템이 사용하는 외부 시스템
+
+2. Actor의 관계
+- super actor : `회원`
+- sub actor : `학생`
+  > 상속 관계
+  > 서브 액터는 수퍼 액터의 역할을 포함한다.
+  > 즉 수퍼액터가 사용할 수 있는 기능을 서브 액터도 사용할 수 있다.
+
+###### Use-case 식별
+- use-case : actor가 시스템을 사용하여 처리하고자 하는 업무 (사용사례 `지양할 표현`)
+
+###### use-case 식별 지침서(권고)
+1. 시스템을 통해 수행하는 업무 (우리 시스템을 사용해서 하는 특별한 것.)
+  > 로그인, 로그아웃 `= 사용자인증`은 업무가 아니므로 use-case가 아니다.
+
+2. 한 Actor가 수행하는 업무
+3. 한 번에 한 순간에 수행하는 업무 `= 셀 수 있는 업무`
+> 1주~4주 사이에 개발할 수 있는 규모로 시스템의 기능을 쪼갤 수 있다.
+> 프로젝트 관리가 용이한 규모로 개발할 시스템의 기능을 정의할 수 있다.
+
+###### use-case 실무
+1. 서로 관련된 use-case인 경우 한 개의 use-case로 합칠 수 있다.
+2. CRUD use-case들을 하나의 use-case로 합칠 수 있다.
+> 너무 use-case를 잘게 쪼개면 오히려 관리하기 번거롭다.
+> 단 합쳤을 때 use-case의 개발 기간이 4주 안팎인 것이 좋다.
+3. 여러 use-case의 공통 시나리오인 경우 별도의 use-case로 뽑을 수 있다.
+> 로그인 하기는 비록 업무는 아니지만 여러 use-case에 포함된 작업이다.
+> 공통기능으로 분리하여 개발할 수 있게 별도의 use-case로 뽑아낸다.
+
+###### use-case 관계
+1. 포함관계(include) : 필수
+    - B업무를 수행하지 않고는 A업무를 완료할 수 없다. **"필수"**
+2. 확장관계(extend) : 선택
+    - `extension point (확장점)`
+- 포함/확장 관계를 명시적으로 표시하는게 이해에 도움이 될 때 그려라.
+굳이 그리지 않아도 관계를 유추할 수 있다면 그러지 말자.
+
+---
+- use-case : Servlet = 1 : *
+> 한 개의 usecase는 한 개 이상의 서블릿`Controller`으로 구현한다.
+
+###### 요구사항 정의 -> 설계 -> 구현 -> ... ; Development Process
+0. 업무 분석
+1. 요구사항 정의
+    - use-case 명세서(text)
+    - 기능/비기능 명세서
+    - UI prototype
+
+2. 설계
+    - Class Diagram
+    - Sequence Diagram
+    - Collaboration Diagram
+    - ER Diagram
+    - Activity Diagram
+    - \+ Participant Diagram
+
+3. 구현
+    - 구현자(implementer)
+    - 프로그래밍 코드
+
+---
+###### 프로젝트에 use-case Modeling 적용
+1. actor 식별
+2. 각 actor에 대해 use-case 식별
+3. 각 use-case에 대해 UI prototype 작성
+
+---
+---
+- declaration element
+> <%!
+int x = 300;
+void m(){}
+%>
+
+- scriptlet
+- template data
+- directive element
+
+---
+###### JSP 파일로 서블릿 클래스를 만들 때 지켜야할 조건
+![](./img/fig14.png)
+
+## 31p 꼭 넣기
