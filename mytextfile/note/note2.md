@@ -1156,10 +1156,17 @@ md, Thymeleaf, FreeMarker, JSP
 ---
 ##### MVC 모델1 과 MVC 모델2
 - MVC : **M**odel **V**iew **C**ontroller
-  - Model : 업무로직 수행
+  - Model
+    > 업무로직 수행
     > DAO, Service, ...etc
-  - View : UI생성
-  - Controller : 요청 제어
+    > 요청/응답에 필요한 작업을 수행한다.
+  - View
+    > UI생성
+    > Controller가 준비한 데이터를 가지고 출력 UI 생성
+  - Controller
+    > [요청 제어]
+    > 요청을 처리하기 위해 요청정보를 가공하고 적절한 서비스객체(DAO객체)를 실행
+    > 응답을 처리하기 위해 응답 데이터를 가공하여 출력을 담당하는 객체를 실행한다.
 
 1. MVC 모델1
   - `web browser` >요청> `JSP` >call> `Java` >질의> `DBMS`
@@ -1168,7 +1175,7 @@ md, Thymeleaf, FreeMarker, JSP
   > `JSP` : Controller 겸 View
   > `java/Domain객체` : VO객체(Value Object), DTO객체(Data Transfer Object)
 
-2. MVC 모델2 : 현업에서 쓰인다.
+2. MVC 모델2 : 현업에서 쓰인다. : MVC1모델의 JSP를 Servlet과 JSP로 분리.
   - `web browser` >요청> `Servlet` >call> `DAO, Service, ...` >질의> `DBMS`
   - `Servlet` >위임> `JSP`
   > `Servlet` : Controller
@@ -1264,3 +1271,69 @@ void m(){}
 ![](./img/fig14.png)
 
 ## 31p 꼭 넣기
+
+---
+## 9/26
+###### include / forward
+1. include
+    > `출력1 > include > 출력2 > 출력3`
+    > 응답 : 출력1 + 출력2 + 출력3
+    > ServletRequest 보관소와 `setAttribute()`와 `getAttribute()`로 데이터를 넣거나 가져올 수 있다.
+2. forward
+    > `출력1 > forward > 출력2 > 출력3`
+    > 응답 : 출력2
+    > forward 하기 전에 기존 출력을 버린다. : 출력1
+    > forward에서 리턴한 후에 출력한 것을 무시한다. : 출력3
+    > ServletRequest 보관소와 `setAttribute()`와 `getAttribute()`로 데이터를 넣거나 가져올 수 있다.
+
+---
+#### JSP Built-in 객체
+- JSP 파일을 가지고 서블릿 자바 코드를 생성할 때 기본으로 준비하는 객체.
+- 객체의 이름은 명세서에 정해져 있다.
+
+###### Built-in 변수
+- 명세서에 이름이 정해져 있다. 
+- JSP엔진 마음대로 이름을 바꿀 수 없다.
+```
+PageContext pageContext = ;
+HttpSession session = ;
+ServletContext application = ;
+ServletConfig config = ;
+JspWriter out = ; 
+Object page = this;
+Throwable exception = ;
+```
+
+
+---
+###### Refresh와 Redirect
+- Refresh는 client에게 **콘텐트를 보낸다!**
+
+
+![](./img/fig15.png)
+
+## 위에 15그림 p35
+
+---
+- EL(**E**xpression **L**anguage)
+- OGNL 표기법을 사용하여 객체의 프로퍼티 값을 조회
+    - **O**bject **G**raph **N**avigation **L**anguage
+    > 객체, 
+
+> ${객체.프로퍼티.프로퍼티.프로퍼티. ...}
+> ${requestScope.board.title}
+
+---
+- EL의 기본객체
+    1. applicationScope(ServletContext 보관소)
+    2. sessionScope(HttpSession 보관소)
+    3. requestScope(servletRequest 보관소)
+    4. pageScope(pageContext(JspContext) 보관소)
+    - ${board.title} 이라고 쓰면 4~1의 역순으로 알아서 찾는다.
+
+- 필드와 프로퍼티
+    - 필드 : field
+    - property명 : `setTitle(){}`이라면 `title` 부분이 property 명
+        - setter
+        - getter
+        > 이 `getter` `setter` 이름이 중요한거지 필드명은 중요치 않다! 관례상 필드명앞에 get과 set을 붙여서 getter와 setter를 만들 뿐.

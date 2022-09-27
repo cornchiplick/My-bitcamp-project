@@ -312,3 +312,24 @@ UML 표기법 -> s1:String
 3. Iterator 구현체 리턴
 4. `hasNext()` >> `LinkedList{}`
 5. `next()` >> `LinkedList{}`
+
+
+
+---
+- class는 resposibility 하다.
+= 클래스는 책임을 갖고 있다. 역할을 갖고있다.
+
+
+---
+dependency : 의존객체
+**쌍방참조가 일어나서는 안된다. 절대로**
+
+---
+- JSP는 단독적으로 실행되지 않고 Servlet으로 바뀌어서 Servlet이 실행된다.
+- JSP와 Servlet은 실상 동일한 개념이다.
+
+---
+- 배열은 크기를 늘릴 수 없다.
+    > 새 배열을 만들어 기존 배열의 값을 복사해야 한다.
+
+---
