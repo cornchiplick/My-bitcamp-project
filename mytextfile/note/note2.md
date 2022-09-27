@@ -1337,3 +1337,13 @@ Throwable exception = ;
         - setter
         - getter
         > 이 `getter` `setter` 이름이 중요한거지 필드명은 중요치 않다! 관례상 필드명앞에 get과 set을 붙여서 getter와 setter를 만들 뿐.
+
+---
+## 9/27
+- 클라이언트에서 세션ID 를 보내주지 않으면 새로 생성
+- 클라이언트가 보낸 세션ID가 무효하다면
+
+![](./img/fig16.png)
+
+## 39p 꼭 넣기
+
