@@ -1340,3 +1340,33 @@ Throwable exception = ;
 
 ---
 ## 9/28
+- PageContext : JSP와 태그 핸들러 사이에 객체를 공유할 때 사용하는 저장소
+
+---
+- 서버 저장소
+    - ServletContext : DAO, Service, Connection
+    - HttpSession : 로그인 사용자, 입력값
+    - ServletRequest : 요청처리결과
+    - PageContext : EL에서 사용할 객체
+
+---
+- **Cookie** : 서버에서 클라이언트 저장소에 보관할 데이터
+    - 서버로부터 받은 쿠키를 클라이언트에서 다시 서버로 보내는 방법
+    > Cookie : `email=user1@test.com; name=okok`
+    > 이 부분은 웹브라우저가 자동으로 처리한다.
+    > <br>
+    > Set-Cookie : `email=user1@test.com`
+    > 이 부분은 개발자의 코딩이 필요!
+
+    - 쿠키는 클라이언트 쪽에 저장되기 때문에 쉽게 노출된다.
+    > 따라서 보안데이터는 쿠키로 저장하면 안 된다.
+
+---
+- /auth/에 소속된 서블릿으로부부터 받은 쿠키는 같은 /auth/에 소속된 서블릿을 요청할 때만 서버로 보낸다.
+> 모든 경로에 대해서 쿠키를 보내게 되면 주고받는 데이터 크기가 너무 커진다.
+
+---
+##### 게시글에 작성자 이름을 포함하기
+- 방법1 : Domain:Board 에 작성자 이름을 저장할 필드 추가
+- 방법2 : Domain:Board가 Domain:Member 를 포함하게끔.
+> 작성자 이름을 객체에 담아서 추가
