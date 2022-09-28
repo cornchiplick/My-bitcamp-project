@@ -333,3 +333,268 @@ dependency : 의존객체
     > 새 배열을 만들어 기존 배열의 값을 복사해야 한다.
 
 ---
+- `i++;` ::
+    > i : operand
+    > ++ : operator
+
+- s1.compute();
+    > s1 : operand
+    > compute : operator
+
+---
+
+- Stack
+    = `Last In First Out = LIFO`
+    `(push(넣기) 와 pop(튀어나오기))`
+
+---
+- 객체화 = 부품화 ::
+    > 기능 변경 및 교체가 쉽다.
+
+---
+- 캡슐화, 객체화(encapsulation) :
+    - 클래스, 메서드 안에 넣는다.(감춘다)
+        > 복잡한 코드를 메서드 안에 감춰서 쓰기 쉽게 하는 것.
+
+---
+```
+    상속은 실선 빈 화살표
+    구현은 점선 빈 화살표 (상급자 쪽이 화살표를 받는다.)
+```
+
+---
+# generic 문법의 가치
+    - Object로 받으면 클래스는 한개만 정의해서 좋지만 사용할 때 특정 타입만 받는것이 불가능하다.
+    - 특정 타입별로 클래스를 정의하면 유지보수가 거의 불가능하다.
+    > 이 두 단점을 해결하기 위해서!
+    - 한 개의 클래스를 만들어 놓고 각 타입 별로 따로 만든 클래스인것처럼 사용할 수 있게 해주는 문법.
+
+---
+- data파일은 eclipse에서는 프로젝트 폴더아래에 생성되고, cmd에서는 명령을 실행한 폴더에 생성된다.
+
+---
+# Factory Method 패턴(GOF의 디자인 패턴), Information Expert(GRASP) 패턴
+    - factory method : 인스턴스를 공장처럼 찍어내는 메소드   
+    - **Information Expert** ::
+        - 객체생성(Board)은 그 객체를 가장 잘아는 객체(Board)에게 맡긴다.
+
+---
+- **wrapper 클래스** : primitive data를 포장하는 객체
+
+---
+- GRASP : 객체지향프로그래밍의 핵심
+
+---
+- 여러 곳에서 사용할 클래스라면 분리해서 관리하는게 유지보수에 좋다.
+
+---
+- Single project와 Multisub project
+
+```
+1. Single Project 디렉토리 구조
+    gradle-project/     // 메인 프로젝트 폴더
+        |- settings.gradle // 프로제트 공통설정
+        |- build.gradle // 프로젝트 설정
+
+2. Multi-Sub Project 디렉토리 구조
+    gradle-project/     // root project
+        |- app/         // sub project 들
+            |- build.gradle // sub project 전용 설정
+        |- sub1/
+            |- build.gradle
+        |- sub2/
+            |- build.gradle
+        |- settings.gradle  // 모든 서브 프로젝트가 공유하는 공유 설정
+```
+
+---
+-  Application Architecture
+    - App-client : 서버에 요청
+        - UI처리
+        - 업무 로직
+    - App-server : 클라이언트에게 응답
+        - 데이터 처리
+
+
+---
+##### OS와 ShellScript
+- Windows OS :
+    - 명령창 기본 shell 스크립트
+    - PowerShell (= Unix shell script 모방)
+- Unix OS :
+    - zsh, bash, bsh, tsh, csh, sh...
+- Mac OS :
+    - AppleScript, ...
+
+---
+- http 프로토콜의 첫번째 라인(요청 및 응답) :
+    `status 라인`
+- http 프로토콜의 두번째 라인 :
+    `Host 헤더(+포트번호)`
+
+
+---
+- `<book>` : 데이터를 설명하는 데이터
+( = meta data(부가 데이터) = markup(출판 용어) = tag ( = element))
+
+- 부모태그, 자식태그,
+    > more ::
+    > 조상태그(= ascendant), 자손태그(= descendant)
+
+---
+- InputStream : 단순히 1byte씩 읽어온다.
+- InputStreaReader ::
+    > - InputStream에서 읽어온 byte 타입의 데이터를 char 타입으로 바꿔서 UTF-16으로 리턴한다.
+    > - 그 과정에서 한글이면 3바이트를 알아서 읽음.
+- `BufferedReader` : \n을 만날 때까지 읽어오고 한줄을 리턴.
+
+---
+- `echo %PATH%` : 환경변수의 경로 조회(?)
+- . : 현재폴더
+- .. : 상위폴더
+<br>
+###### `C:\Users\bitcamp>a.exe`
+- 현재 경로에서 찾는다.
+- OS의 PATH환경 변수에 등록된 경로를 순서대로 찾는다.
+- Unix의 경우 현재 경로를 명시해야 한다.
+    ex) `./a.exe`
+    (PATH환경 변수에 등록된 경로를 따라가며 찾기 때문이다.)
+
+- `a.exe` 파일 : 컴파일 된 기계어 명령의 실행파일
+    - 실행 시에 `.exe` 부분은 생략가능
+    > _순서_
+    > 1. a.com 찾는다
+    > 2. a.exe 찾는다
+    > 3. a.bat 찾는다
+    - `.com`과 `.exe`는 기계어 파일
+        > .bat은 OS가 이해하는 스크립트로 작성된 명령어가 들어있는 파일 << 컴파일 불필요!
+    - `a.doc` 등은 기계어 파일이 아니다! >> 직접실행불가!
+        > .doc 확장자와 연결된 프로그램을 실행
+        > 그 프로그램이 `a.doc` 파일을 읽는다.
+
+- Unix 에서는 실행파일에 대해 사용자가 실행권한을 가지고 있어야만 실행할 수 있다.
+`$ls -al`
+`rw-r--r-- a` : 644
+`rw-` : user권한
+`r--` : group권한
+`r--` : other 권한
+`a` : 실행파일명
+1. 실행파일에 대해 사용자에게 실행권한을 부여하지 않았기 때문에 실행할 수 없다.
+2. 실행권한 부여 : `$chmod 744 a`
+3. `744` : 111_100_100 (= rwx r-- r--) ->> **_실행권한을 2진수로 표현_**
+4. `$a` : 드디어 실행할 수 있다.
+
+---
+
+* `implements Iterable` 이라면
+> for (Member m : **list**) {} 에 사용할 수 있다.
+
+---
+
+#### 향상된 for문
+    > for (Member m : members)
+- 향상된 for문은 컬렉션과 배열(이들 또한 `iterable`구현체이다), `iterable`인터페이스를 구현한 객체라면 무엇이든 사용할 수 있다.
+- 향상된 for문으로 컬렉션 데이터를 처리할 때, 컬렉션은 수정할 수 없다.
+
+
+---
+
+- Application은 결국 OS의 메서드 호출 >> 실행 시 OS의 영향을 받는다.
+
+---
+
+- LAN Card = NIC (Network Interface Card)
+
+---
+
+- 버퍼 사용시 입출력
+    > 버퍼가 꽉 찼을 때 입출력하기 때문에 server-client 간 데이터전송이 원활하게 이루어지지 않는다.
+- 해결법
+    > `flush()`를 실행하여 출력을 명령한다.
+
+---
+
+- byte Stream : inputStream, ...
+- character Stream : Reader, Writer, ...
+
+---
+
+- Node.js 는 싱글스레드로 되어 있다.
+- 자바스크립트를 실행하는 스레드는 하나뿐이므로 Node를 싱글스레드라고 한다.
+- 그 싱글스레드는 이벤트 루프이다.
+
+---
+- msb = most significant bit = 최상위비트
+- lsb = least significant bit = 최하위비트
+
+- 패리티 비트와 XOR 연산자
+```
+    결합법칙을 활용
+    교환법칙을 활용
+        0111 0011 =>
+                0111 ^ 0011 = 0100 =>
+                        01 ^ 00 = 01 =>
+                                0 ^ 1 = 1
+```
+
+
+---
+- 서로 다른 타입의 데이터를 계산
+`[int 연산자 float]`
+        int -> float 한 후
+`[float 연산자 float]`를 계산
+
+`int i=5;`
+`int j=2;`
+`int z = i / (float) j;`
+    i를 float로 임시 형변환 후 float / float 계산 후, `= implicit conversion`
+    z를 int로
+
+---
+##### 자바 문법
+    1. literal //데이터 표기법
+    2. variable //메모리 준비
+    3. operators //데이터 연산자
+    4. 흐름제어문 //조건, 반복문
+    5. 메소드 //명령어 묶음
+    6. 클래스 //메소드 묶음
+
+---
+- 국제화 : internationalization : I18N
+- 지역화 : localization : L10N
+
+---
+```
+인스턴스는 만들고 싶으면 반드시 new 생성자로 만들어줘야 한다.
+그리고 주소를 배정해야 하고 한번에 여러개 만드는 방법 따위는 없다.
+만들고 싶으면 반복문을 이용해서 여러개 만들어라.
+```
+
+- 레퍼런스 카운트 테이블 :: JVM이 관리함.
+
+---
+```
+변수명 : 타입
+메서드명(변수:타입, 변수:타입):리턴타입
+```
+
+위처럼 나타내는 것이 UML 이다! (별로 안중요한 타입이라면 생략가능)
+
+---
+- 자료 구조를 구현하고 다루는 방법:
+    - Linked List
+
+> BoardList의 데이터 저장 방식을 변경
+> 상속을 이용해서 변경
+
+- 배열을 이용해서 목록을 관리 ::
+    - 가비지가 많이 생성
+    - 삭제시 속도가 느리다.
+    - 크기가 고정.
+- 노드를 연결하는 방식으로 목록을 관리 ::
+    - 초기 크기가 작다.
+    - 크기 변경 가능 => 가비지가 적게 생성
+    - 삭제가 빠르다.
+        * 조회속도가 느리다.
+
+---
