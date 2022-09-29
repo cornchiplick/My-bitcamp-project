@@ -1370,3 +1370,90 @@ Throwable exception = ;
 - 방법1 : Domain:Board 에 작성자 이름을 저장할 필드 추가
 - 방법2 : Domain:Board가 Domain:Member 를 포함하게끔.
 > 작성자 이름을 객체에 담아서 추가
+
+
+---
+## 9/29
+- <<interface\>> Filter
+    - init()
+    - doFilter()
+    - destroy()
+
+- 필터배치 두가지 방법 `필터배치(deployment)`
+    1. 애노테이션
+    @WebFilter(url)
+    > 자기가 만든 필터
+    > 소스 갖고 있음
+    > 애노테이션 붙일 수 있음
+
+    2. DD File(web.xml)
+    <filter\> - </filter\>
+    <filter-mapping\> - </filter-mappiing\>
+    > 남이 만든 필터 클래스
+    > 소스 없음
+    > 애노테이션 붙일 수 없음
+
+> 필터배치(deployment)
+> 이런 필터가 있는데 이런 요청이 들어올때 실행하라고 웹 어플리케이션에 설정하는 것!
+> 서블릿 컨테이너는 배치된 컴포넌트만 관리한다.
+> <br>
+> 컴포넌트 : 필터, 서블릿, 리스너, etc
+
+---
+##### HTTP GET 요청
+- Request Line 한줄
+> GET `/app/auth/login` `?` `email=user1@test.com&password=1111&saveEmail=on` HTTP/1.1
+> 
+> `/app...=on` : Request URI(URL or URN)
+> `/app/auth/login` : Path
+> `email=...=on` : '파라미터명'과 '파라미터 값'으로 이루어진 Query String(서버에 보내는 데이터)
+
+- general-header : 요청, 응답에 모두 붙일 수 있는 헤더
+> Cache-Control, Connection
+
+- request-header : 요청과 관련된 정보
+> Accept
+> Accept-Encoding
+> Host : 요청을 받는 서버
+> User-Agent : 요청을 보내는 브라우저 정보
+
+- entity-header : message-body 로 보내는 데이터에 대한 정보 : `POST` 요청시에 추가된다.
+> Content-Length
+> Content-Type
+
+- GET 요청은 message-body가 없다
+- entity-header가 없다
+- Query String 형태로 데이터를 URL에 포함해서 보낸다.
+    > 단점
+    > - 텍스트만 가능(binary 보내기 힘듦)
+    > - 주소창에 노출(보안취약)
+    > - 웹브라우저는 URL을 캐시에 저장(보안 매우 취약)
+    > <br>
+    > 장점
+    > - URL에 데이터를 포함시킬 수 있다.
+    > **특정 콘텐트를 조회하는 페이지를 가리킬 때 적절하다.**
+
+---
+##### POST 요청
+> POST `/app/auth/login HTTP/1.1` : URL에 데이터가 포함되지 않는다.
+> <br>
+> 장점
+> - message-body 영역에 붙여서 보냄
+> - 보내는 데이터의 크기에 제약 없음
+> - binary 데이터를 보낼 수 있음
+> - URL에 데이터가 포함되지 않기 때문에 직접 노출되는 것을 막을 수 있다.
+> = 보안에 유리
+> - 웹 브라우저가 캐시하지 않는다.
+> = 보안에 유리
+> <br>
+> 대용량의 데이터 전달에 적합
+> = 게시글/첨부파일을 등록/변경, 로그인 데이터 전달에 적합하다.
+
+---
+- POST 방식 요청에서 한글이 꺠지는 이유
+    - UTF-8 한글 코드를 ASCII코드와 같은 방식으로 UTF-16코드로 변환해서 문제가 발생한다.
+- 해결책
+    - URL 디코딩한 바이트를 UTF-16코드로 변환하기 전에 원래 바이트가 어떤 characterset으로 인코딩된 것인지 알려줘라!
+    - request.setCharacterEncoding("UTF-8")
+    > getParameter()를 최초로 호출하기 전에 먼저 실행
+    > 
