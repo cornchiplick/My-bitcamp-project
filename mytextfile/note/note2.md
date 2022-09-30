@@ -1457,3 +1457,21 @@ Throwable exception = ;
     - request.setCharacterEncoding("UTF-8")
     > getParameter()를 최초로 호출하기 전에 먼저 실행
     > 
+
+---
+## 9/30
+- 파일 업로드
+<form action="" method="post" enctype="multipart/form-data"\>
+파일: <input type="file" name="files"\>
+</form\>
+
+> 파일을 전송하려면 `enctype=...data"`처럼 이렇게 MIME타입을 설정해야 한다.
+> 기본은 `application/x-www-form-urlencoded` 이다.
+> 이름=값&이름=값&... 형태로 데이터를 전송한다.
+
+
+---
+- 업로드 파일 처리
+1. apache commons-fileupload 사용
+2. Servlet API 사용
+3. Spring WebMVC 사용

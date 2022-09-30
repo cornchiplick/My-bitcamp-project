@@ -1,0 +1,106 @@
+@charset "UTF-8";
+
+/* common */
+* {
+    padding:0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: '맑은 고딕', sans-seri;
+    color: #333333;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    vertical-align: top;
+}
+
+.wrap {
+    position: relative;
+    width: 1200px;
+    height: 700px;
+    margin: 0 auto;
+}
+
+
+/* popUpBox */
+.popUpBg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    display: none;
+}
+
+.popUpBox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.popUp {
+    position: absolute;
+    width: 600px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    line-height: 2;
+    border: 1px solid #000;
+    background: #fff;
+    padding: 20px;
+}
+
+.popUp p {
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.popUp div {
+    margin-top: 30px;
+}
+
+.popUp button {
+    float: right;
+    padding: 4px;
+    cursor: pointer;
+}
+
+/* header */
+header {
+    position: relative;
+    display: flex;
+    height: 100px;
+    align-items: center;
+}
+
+header h1 {
+    display: block;
+    width: 200px;
+    height: 40px;
+    font-size: 0px;
+    color:transparent;
+}
+
+.headerBg {
+    position: absolute;
+    width: 100%;
+    height: 125px;
+    left: 0;
+    top: 100px;
+    background: rgb(98, 172, 83);
+    z-index: 996;
+    display: none;
+}
+
