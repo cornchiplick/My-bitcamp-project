@@ -1475,3 +1475,10 @@ Throwable exception = ;
 1. apache commons-fileupload 사용
 2. Servlet API 사용
 3. Spring WebMVC 사용
+
+---
+## 10/4
+- 한 개의 DAO가 한 개의 테이블을 관리하는 것이 기본이다.
+- 복잡하지 않다면 한 개의 DAO가 여러 테이블의 데이터를 관리할 수 있다.
+- 여러 DAO가 한 개의 테이블을 관리(owner)하면 안 된다.
+- 하지만 조회(select)할 수는 있다.
