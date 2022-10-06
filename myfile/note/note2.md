@@ -1497,3 +1497,11 @@ Controller로 이관한다.
 
 ###### Low Coupling
 1. 연결점이 많아지면 유지보수가 어렵다.
+
+---
+## 10/6
+- datasource : Thread를 각각 다루기 위해 생성한 여러 Connection 객체들을 관리하는 목적으로 사용되는 객체.
+    - 스레드 전용 DB 커넥션 제공
+
+- client - controller - service - dao - table 의 관계를 잘 지켜라.
+
