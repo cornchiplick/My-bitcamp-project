@@ -1505,3 +1505,27 @@ Controller로 이관한다.
 
 - client - controller - service - dao - table 의 관계를 잘 지켜라.
 
+---
+## 10/7
+- Front Controller
+> Controller의 공통기능을 처리한다
+> client와의 접점을 줄인다.(Low Coupling)
+> `Facade 디자인 패턴`을 적용한 예이다.
+> ex) refresh, redirect, JSP실행, 오류처리 등
+
+- `Facade 디자인 패턴`
+> 객체간의 복잡한 작업 과정을 캡슐화 함으로써 코딩이 간결해진다.
+> 사용 객체와의 접점을 줄임으로써 유지보수가 쉬워진다.
+
+- 서블릿을 서버에 등록하는 방법
+1. 애노테이션을 붙이기
+    > WebServlet
+    > 서블릿 소스코드가 있을 경우 사용가능
+2. DD파일에 설정
+    > web.xml
+    > 서블릿 소스코드가 없을 경우 사용가능
+3. 자바코드로 직접 서블릿 객체 등록
+    > Dynamic 객체 활용
+    > 서블릿 소스코드가 없을 경우 사용가능
+
+- POJO(Plain Old Java Object)
