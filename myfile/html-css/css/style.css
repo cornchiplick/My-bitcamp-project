@@ -104,3 +104,165 @@ header h1 {
     display: none;
 }
 
+header h1 a {
+    display: block;
+    width: 200px;
+    height: 40px;
+}
+
+header nav {
+    width: 600px;
+    margin: 58px 0px 0px 370px;
+}
+
+header nav > ul {
+    display: flex;
+}
+
+header nav ul a {
+    display: block;
+    text-align: center;
+    background: #fff;
+    padding:10px;
+}
+
+li.lv1{
+    position:relative;
+    width: 25%;
+}
+
+li.lv1 > a{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+ul.lv2 {
+    position:absolute;
+    width: 100%;
+    z-index: 997;
+    display: none;
+}
+
+ul.lv2 a {
+    color: #fff;
+    background: rgb(98, 172, 83);
+}
+
+li.lv1:hover > a {
+    color: #fff;
+    background: rgb(31, 122, 39);
+}
+
+ul.lv2 li:hover a {
+    color:#333;
+    background: #fff;
+}
+
+/* slideContainer */
+.slideContainer {
+    height: 300px;
+    overflow: hidden;
+}
+
+.slideWrap {
+    width: 300%;
+}
+
+.slide {
+    position: relative;
+    float: left;
+}
+
+.slide p {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgb(98, 172, 83);
+    padding: 10px;
+}
+
+/* content */
+.content {
+    display: flex;
+    height: 200px;
+}
+
+.content > * {
+    width: 400px;
+}
+
+.notice, .gallery {
+    padding:10px;
+}
+
+.content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.notice li {
+    display: flex;
+    line-height: 2.2;
+}
+
+.notice li a {
+    display: inline-block;
+    width: 250px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.notice li span {
+    margin-left: auto;
+}
+
+.notice li:hover {
+    background: rgb(89, 226, 100);
+}
+
+.gallery ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+.gallery li {
+    display: inline-block;
+    width: 32%;
+    margin-top: 12px;
+}
+
+.banner {
+    position:relative;
+}
+
+.banner h2 {
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    font-weight: 600;
+    background: #fff; padding:10px;
+}
+
+/* footer */
+footer {
+    display: flex;
+    height: 100px;
+    align-items: center;
+}
+
+footer .footerLogo {
+    display: block;
+    width: 200px;
+    height: 40px;
+    font-size: 0px;
+    color:transparent;
+}
+
+footer p {
+    width: 70%;
+    text-align: center;
+}
