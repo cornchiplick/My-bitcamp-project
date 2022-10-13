@@ -1529,3 +1529,124 @@ Controller로 이관한다.
     > 서블릿 소스코드가 없을 경우 사용가능
 
 - POJO(Plain Old Java Object)
+
+---
+## 10/11
+- DispatcherServlet >> getBean() >> Spring IoC 컨테이너 >> Controller 객체 리턴
+
+- Bean(커피콩)
+> = Object
+> = instance
+
+- IoC
+> Inversion of Control
+> 역제어
+> 1. 객체 생성
+> 일반적인 경우 : 객체가 필요하면 생성해서 쓴다.
+> 역제어 : 필요한 객체를 외부에서 만들어 주입해준다.
+> 2. 메서드 호출
+> 일반적인 경우 : 어떤 작업을 수행하기 위해 메서드를 호출한다.
+> 역제어 : 특정 상태에 놓일 때 등록된 메서드가 자동호출된다.
+> ex) 리스터, 필터, 서블릿
+
+- IoC의 장점
+> 객체를 교체하기 쉽다.
+> `Dependency Injection`
+> 의존객체주입 = `DI`
+
+- Sprig IoC Container
+= DI Container
+= Bean Container
+
+---
+- DataSource 는 한 스레드에 대해 같은 Connection 객체를 리턴한다.
+> 트랜잭션을 다루기 위해서이다.
+> 같은 Connection이어야 그 Connection을 통해 수행한 작업이 같이 묶일 수 있다.
+
+- DataSource의 역할
+1. 같은 스레드에 같은 커넥션
+2. 커넥션 재사용
+
+- DataSource의 커넥션 풀
+    - DVD 대여와 유사하다.
+    - 생성에 소요되는 시간을 줄일 수 있다. (사용자 인증, 권한 검사)
+    - 가비지 생성을 줄일 수 있다. (메모리를 효율적으로 운영)
+
+---
+## 10/12
+- `@Component("패키지명")` : 해당 패키지에 존재하는 클래스 중에서 Spring 프레임웍에서 지정한 애노테이션 붙은 경우 객체를 생성하고 애노테이션을 처리
+- `@Bean("객체명")` : 메서드를 호출하여 리턴된 값을 컨테이너에 보관
+
+- 개발자의 일
+    - 애노테이션의 의미와 효과를 이해
+    - 적절하게 사용
+    - IoC 컨테이너를 통제
+
+- ApplicationContext 가 가지는 역할
+    1. Bean factory method 규칙을 정의
+    2. The ability to load file resource
+    3. The ability to publish events / to registered listeners.
+    4. resolve messages, supporting internationalization.
+> 빈 컨테이너로서 동작하는 것과 관련된 메서드를 정의
+
+- Spring IoC 컨테이너 클래스 계층도
+![](./img/fig17.png)
+## 위에 88p 사진 넣기
+
+---
+- `AnotationConfigApplicationContext`는 서블릿관련 객체를 보관하지 않는다.
+- `AnnotationConfigWebApplicationContext`는 서블릿 관련 객체를 보관한다.
+- 서블릿관련 객체 : `ServletContext`, `HttpSession`, etc
+
+---
+- Web Application에서 사용하는 IoC 컨테이너
+1. `AnnotationConfigWebApplicationContext`
+2. `XmlWebApplicationContext`
+
+---
+- `AnnotationConfigApplicationContext`는 `@Component`애노테이션이 붙은 클래스에 대해 객체를 자동으로 생성한다.
+1. `@Component`는 하위목록으로 다음을 가진다.
+    - `@RestController` : json, xml을 응답하는 페이지 컨트롤러에 붙인다.
+    - `@Controller` : html을 응답하는 페이지 컨트롤러에 붙인다.
+    - `@Service` : 비즈니스 로직 및 트랜잭션을 제어하는 클래스에 붙인다.
+    - `@Repository` : DAO역할을 수행하는 클래스에 붙인다.
+> 클래스를 역할에 따라 좀 더 섬세하게 제어하기 위해 만든 애노테이션
+
+2. `AnnotationConfigWebApplicationContext`는 위에 추가로
+    - ServletContext
+    - HttpSession
+    - ServletRequest
+    - ServletResponse
+    - etc
+> 등 웹관련 컴포넌트도 관리한다.
+
+---
+- CRUD
+> C : Create
+> R : Retrieve | Read
+> U : Update
+> D : Delete
+
+---
+## 10/13
+- 요청 핸들러에서 요청 처리에 필요한 값만 파라미터로 받으면 된다.
+- `@RequestParam("para") String para` 의 형태라면 `@RequestParam("para")`를 생략할 수 있다.
+- 파라미터로 받는 도메인 객체의 프로퍼티 명과 같은 이름의 속성이 넘어온다면 자동으로 그 도메인객체의 프로퍼티에 값을 삽입해준다.
+- ModelaAndView 클래스 : 
+
+#### 요청 핸들러의 리턴 타입
+- void handle() {} : JSP주소가 없다. 요청 URL을 JSP주소로 사용한다.
+- String ~ : JSP URL
+- Model ~ : ServletRequest 보관소에 담을 객체들을 리턴
+JSP주소가 포함되어 있지 않다.
+=> 요청 URL을 JSP주소로 사용한다.
+- Map ~ : Model과 같은 메서드로 취급한다.
+- ModelAndView ~ : JSP주소 + ServletRequest 보관소에 저장할 객체들
+- View ~ : JSP주소를 View 객체에 담아 리턴한다.
+> Front Controller(DispatcherServlet)는 요청 핸들러의 리턴타입에 따라 적절하게 처리한다.
+
+- InternalResourceViewResolver : 접두어 접미사를 통해 jsp viewer를 관리한다.
+> 페이지 컨트롤러가 JSP주소를 알려주지 않았다면
+> 요청 URL에서 페이지 컨트롤러 path를 JSP주소로 사용한다.
+
+
