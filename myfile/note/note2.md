@@ -1456,7 +1456,6 @@ Throwable exception = ;
     - URL 디코딩한 바이트를 UTF-16코드로 변환하기 전에 원래 바이트가 어떤 characterset으로 인코딩된 것인지 알려줘라!
     - request.setCharacterEncoding("UTF-8")
     > getParameter()를 최초로 호출하기 전에 먼저 실행
-    > 
 
 ---
 ## 9/30
@@ -1591,7 +1590,6 @@ Controller로 이관한다.
 
 - Spring IoC 컨테이너 클래스 계층도
 ![](./img/fig17.png)
-## 위에 88p 사진 넣기
 
 ---
 - `AnotationConfigApplicationContext`는 서블릿관련 객체를 보관하지 않는다.
@@ -1632,7 +1630,6 @@ Controller로 이관한다.
 - 요청 핸들러에서 요청 처리에 필요한 값만 파라미터로 받으면 된다.
 - `@RequestParam("para") String para` 의 형태라면 `@RequestParam("para")`를 생략할 수 있다.
 - 파라미터로 받는 도메인 객체의 프로퍼티 명과 같은 이름의 속성이 넘어온다면 자동으로 그 도메인객체의 프로퍼티에 값을 삽입해준다.
-- ModelaAndView 클래스 : 
 
 #### 요청 핸들러의 리턴 타입
 - void handle() {} : JSP주소가 없다. 요청 URL을 JSP주소로 사용한다.
@@ -1649,4 +1646,50 @@ JSP주소가 포함되어 있지 않다.
 > 페이지 컨트롤러가 JSP주소를 알려주지 않았다면
 > 요청 URL에서 페이지 컨트롤러 path를 JSP주소로 사용한다.
 
+---
+## 10/14
+- Spring WebMVC 설정법
+> `onStartup()` 을 호출한다.
+> - 구현체가 요구한 클래스 목록
+> - `ServletContext` 객체
 
+- `SpringServletContainerInitializer`
+> `onStartup()`을 호출할 때 `WebApplicationInitializer`구현체를 모두 찾아 그 클래스 목록을 달라고 요구하고 있다.
+
+- Listener는 실행 순서를 조정할 수 없다.
+- Initializer는 실행 순서도 조정할 수 있다.
+
+- `ServletContainerInitializer`는 `ServletContextListener`를 실행하기 전에 이 리스너들이 사용할 자원을 준비시키는 역할
+> 특히 모든 웹 애플리케이션에 공통으로 적용된다.
+
+- `WebApplicationInitializer` 인터페이스는 스프링꺼
+
+---
+1. `ContextLoaderListener` implements `ServletContextListener`
+> Spring IoC Container 준비
+> DispatcherServlet 준비
+> 기타 필터 준비
+
+2. migration(이사, 이전)
+
+3. `AppWebApplicationInitializer` implements `WebApplicationInitializer`
+> 위의 역할을 그대로 이 객체가 수행한다.
+
+---
+- Root IoC Container
+> 각 프론트 컨트롤러마다 IoC 컨테이너를 하나씩 소유하고 있다.
+> 각 IoC 컨테이너끼리 중복되는 컴포넌트들을 따로 뽑아서 공통 IoC 컨테이너에 보관한다.
+> 이 공통 IoC Container를 `Root IoC Container`라고 한다.
+> `Root IoC Container`는 `ContextLoaderListener`가 소유한다.
+>
+> `AbstractContextLoaderInitializer`에는 `WebApplicationInitializer`의 기능에 추가로
+> 1. `ContextLoadListener` 생성 기능
+> 2. `Root IoC Container` 준비 기능
+> 이 있다.
+
+---
+- WebApplicationInitializer 구현
+![](./img/fig18.png)
+
+---
+## 
