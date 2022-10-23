@@ -1692,4 +1692,46 @@ JSP주소가 포함되어 있지 않다.
 ![](./img/fig18.png)
 
 ---
-## 
+## 10/17
+- Template Method Pattern : 수퍼클래스에서 추상메서드를 호출하도록 해두고, 구체적인 구현은 서브클래스에서 결정하게한다.
+
+---
+## 10/18
+- `selectOne("[namespace]", "id")`의 결과
+> select 결과가 없다면 : null
+> select 결과가 1개라면 : 결과 객체
+> select 결과가 여러개라면 : 예외 발생
+
+- primary key 값을 항상 `id 속성`에 배치
+
+---
+## 10/19
+- jdbc.properties 파일 외부에 배치한 후 적용하기
+- Mybatis가 자동으로 생성할 DAO 인터페이스를 지정하기
+> - Mybatis는 매퍼 파일과 인터페이스를 분석하여 DAO 구현체를 자동 생성한다.
+> 조건:
+> 1) namespace의 값은 DAO 인터페이스의 이름(fully-qualified name)이어야 한다.
+> 2) SQL ID는 인터페이스에 선언된 메서드 이름과 일치해야 한다.
+> 3) SQL의 파라미터 타입도 메서드의 파라미터 타입과 일치해야 한다.
+
+- DAO 자동 생성 조건
+
+![](./img/fig19.png)
+
+# 31p DAO 자동 생성 조건
+
+---
+- 프로젝트에 톰캣을 삽입하면 : 웹애플리케이션과 서블릿을 한번에 배포할 수 있다.
+
+---
+## 10/20
+- `classpath:` : `bin/main/*`
+
+- Monolithic : 한 개의 web application
+
+- Microservices : 서비스당 한 개 서버
+> 서비스별로 관리한다
+> 유지보수가 쉽다.
+
+---
+## 10/21
