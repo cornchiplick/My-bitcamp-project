@@ -1734,4 +1734,43 @@ JSP주소가 포함되어 있지 않다.
 > 유지보수가 쉽다.
 
 ---
-## 10/21
+## 10/24
+- payload : 실제 서버에 보내려는 데이터 (부가정보는 제외)
+
+- checkbox, radio button 은 선택하지 않으면 값을 넘기지 않는다.
+> 이들을 선택된 채로 보여주고 싶다면 'checked' 속성 사용
+
+- select는 선택하지 않아도 기본으로 설정된 값을 반드시 넘긴다.
+> 다른 것을 선택하고 싶다면 그 항목에 'selected' 속성 사용
+
+---
+## 10/25
+- DOM(Document Object Model)
+- CSS(Cascading Style Sheet)
+- margin: 다른 요소의 margin과 겹칠 수 있다.
+- `selector1 > selector2` : 직계 자식일 경우에만 `>` 사용한다.
+- `selector1 selector2` : 조상과 자손 관계 이기만 하면 적용된다.
+- `selector1 + selector2` : 형제 관계, 즉 `selector1`와 `selector2`가 순서대로 연달아 있을 때 `selector2`에 적용한다.
+- `selector1.class` : 그 class를 갖는 selector1 에 적용한다.
+- nth child(n) : 부모로부터 n번째 자식에 대해 적용한다.
+
+- 태그는 `block`태그와 `inline`태그로 나눌 수 있다.
+- display: 
+    - block: block 처럼 한 줄 차지함
+    - inline: 높이, 너비, 마진(위아래) 적용 안됨
+    - inline-block: block인데 inline처럼 한줄 안에 들어감.
+
+- width, height: 박스가 아니라 안의 내용물(content)의 크기만 얘기한다.
+- `box-sizing: border-box;`라고 하면 width, height는 박스의 크기가 된다.
+
+- 폰트 크기 보통 small로 많이함.
+
+---
+## 10/26
+- `display: none;` : 출력조차 되지 않는 투명
+- `visibility: hidden;` : 원래의 공간은 차지하지만 보이지 않는다.
+- float 하면 margin은 겹치지 않는다.
+- float, absolute 속성은 무엇이든 상관없이 높이, 너비가 콘텐트크기로 결정된다.
+- float에 의해서는 콘텐트가 가려지지 않는다.
+- absolute에 의해 콘텐트는 가려질 수 있다.
+- absolute는 clear의 영향을 받지 않는다.
