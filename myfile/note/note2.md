@@ -1774,3 +1774,125 @@ JSP주소가 포함되어 있지 않다.
 - float에 의해서는 콘텐트가 가려지지 않는다.
 - absolute에 의해 콘텐트는 가려질 수 있다.
 - absolute는 clear의 영향을 받지 않는다.
+
+---
+## 10/27
+- dynamic type binding: 값을 넣는 순간 변수의 타입이 결정. <--> java의 **static type binding**
+- `const` : 값을 한 번만 집어넣을 수 있다.
+- 콜백함수 : java의 observer 패턴
+- RestCocntroller 가 리턴하는 값이 브라우저로 던져버린다.
+
+---
+## 10/28
+- Hoisting : 선언문 먼저 실행 (초기화는 해당없다)
+> 변수 선언, 메서드 선언
+> Hoisting의 범위는 현재 script태그에 대해서만이다.
+
+- Closure : 중첩함수의 공유메모리
+
+- `let`과 `var`의 차이
+> `let`은 블록변수로 이용된다.
+> `var`는 어디서든 사용할 수 있다.(항상 글로벌변수)
+> 그러나 `var` 변수여도 함수 안에 선언되어 있다면 글로벌변수가 아니다.
+> 가능하면 const 변수를 쓰고, 사용할 수 없는 상황이면 let을 쓰고, 사용할 수 없다면 var을 마지막으로 사용하라.
+
+- 일반객체는 `for of`문을 사용할 수 없다.
+> iterable 프로토콜을 구현한 객체만 가능
+
+- Map 객체에 대해서 `for of`문법을 사용하고자 할 때 destructuring 문법을 사용하여 key와 value를 **분해**하여 받는다.
+```
+for (var [key, value] of obj2) {
+    console.log(key, "=", value);
+}
+```
+
+---
+## 10/31
+- 자바스크립트: 함수도 객체다.
+> `new Object();`로 생성했을 때 : 함수 body가 없다.
+> `function f1() {}`로 생성했을 때 : 함수 body가 저장된다.
+
+- Closure : 함수 안에서 정의된 함수
+> = inner function, nested function
+
+---
+## 11/1
+- arrow function 에서 `this`는 자신이 소속된 객체가 아니라 `window`객체를 가리킨다.
+
+---
+## 11/3
+- **CSR**: Client Side Rendering
+- **SSR**: Server Side Rendering
+
+---
+## 11/21
+- n cloud 서버 구축
+1. VPC 생성
+    - VPC이름 : bitcamp-vpc
+    - ip주소 범위 :  10.0.0.0/16
+2. 서버 생성 후 안쓰게 되면 서버 삭제할것
+3. Network ACL > ACL Rule > 기본말고 새로 만들기
+4. ACL
+    - Network ACL : bitcamp-acl
+    - 
+
+5. inbound rule 설정 : **vpc rule 설정**
+    - 우선순위: 1 (가장높은우선순위)
+    - TCP
+    - 접근소스: 0.0.0.0/0 (접근은 누구나 다 허용)
+    - 포트: 1-65535
+
+6. inbound rule 설정
+    - 우선순위: 2
+    - 위와동이지만 UDP
+
+7. inbound rule 설정
+    - 우선순위: 3
+    - 위와동이지만 ICMP (pint 허용)
+
+8. VPC > Subnet Management : **subnet 생성**
+    - subnet 이름 : bitcamp-subnet
+    - bitcamp-vpc
+    - 10.0.1.0/24
+    - ''
+    - ''
+    - public / 일반
+
+9. Service > Compute > Server > ACG > ACG 생성 : **subnet 규칙 정의**
+    - bitcamp-web-acg
+    - bitcamp-vpc
+    - ACG 설정 inbound
+        - ICMP (0.0.0.0 이하동)
+        - TCP 1-65535
+
+    - ACG 설정 outbound
+        - ICMP
+        - TCP 1-65535
+        - UDP 1-65535
+
+10. Server > server > 서버생성
+    - OS, CentOS, Standard
+    - HDD, g2, standard, 암호화x, 시간요금제, 1대, bitcamp-svr, ip:10.0.1.100/32 추가, 새 공인 ip할당, 반납보호해제, script 설정없음
+    - 새로운인증키생성: bitcamp // 생성된 인증키는 본인 이메일에 백업해놓기
+    - eth0: bitcamp-web-acg
+
+11. PuTTY 설치 (mac제외)
+    - 10.의 서버 공인아이피를 Host Name에 넣기
+    - 10.의 관리자 비밀번호 확인 : 백업했던 인증키로 확인하기
+    - putty id = root / password = 관리자비밀번호
+
+12. putty 새 유저 생성
+    - useradd bitcamp
+    - passwd bitcamp
+    - new passwd: 1111
+    - exit > 다시 로그인
+    - login as: bitcamp / 1111
+
+    - mac은 ~
+    - ssh ~.~.~.~
+    - 기타 똑같이
+
+13. 네이버 서버에 자바 설치
+    - yum jdk 설치 검색해서 알아서 하기 (앞에 sudo 붙여서)
+    - liquidweb.com/kb/install-java-8-on-centos-7/
+14. JAVA_HOME path 설정하기

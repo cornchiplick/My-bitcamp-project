@@ -1,0 +1,25 @@
+<!-- 닉네임 중복 확인 script -->
+<script>
+  $(".nickName").blur(function () {
+  var nickName = $("input.nickName").val();
+  var nickNameCheckBox = document.getElementById("nickNameCheckBox");
+
+  $.ajax({
+    type: "GET",
+    url: "../event/nickNameCheck",
+    data: { nickName: nickName},
+    success: function (result) {
+      if(result == "true") {
+        nickNameCheckBox.innerHTML = "멋진 별명이에요!";
+        nickNameCheckBox.style.color = "green";
+      } else if (result == "duplicated") {
+        nickNameCheckBox.innerHTML = "같은 별명이 이미 사용중이에요.";
+        nickNameCheckBox.style.color = "red";
+      } else if (result == "incorrect") {
+        nickNameCheckBox.innerHTML = "영문, 한글, 숫자 조합으로 4~12자로 입력해주세요";
+        nickNameCheckBox.style.color = "red";
+      }
+    },
+  });
+});
+</script>
